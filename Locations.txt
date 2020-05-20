@@ -1,0 +1,27 @@
+Low Yat Plaza
+7, Jalan Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+3.144201, 101.709943
+
+Suria KLCC
+241, Suria KLCC, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+3.158151, 101.711561
+
+UM CENTRAL
+50603 Kuala Lumpur, Federal Territory of Kuala Lumpur
+3.121164, 101.653644
+
+Batu Caves
+Gombak, 68100 Batu Caves, Selangor
+3.237904, 101.684074
+
+Dataran Merdeka
+Jalan Raja, City Centre, 50050 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+3.149307, 101.693728
+
+Sunway Pyramid
+Sunway Pyramid, No. 3, Jalan PJS 11/15, Sunway City, 47500 Petaling Jaya, Selangor
+3.073419, 101.607947
+
+Zoo Negara Malaysia
+Jalan Taman Zooview, Taman Zooview, 68000 Ampang, Selangor
+3.208733, 101.757921
