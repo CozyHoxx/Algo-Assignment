@@ -25,3 +25,7 @@ Sunway Pyramid, No. 3, Jalan PJS 11/15, Sunway City, 47500 Petaling Jaya, Selang
 Zoo Negara Malaysia
 Jalan Taman Zooview, Taman Zooview, 68000 Ampang, Selangor
 3.208733, 101.757921
+
+KL Sentral
+Kuala Lumpur Sentral, 50470 Kuala Lumpur, Federal Territory of Kuala Lumpur
+3.134349, 101.686321
