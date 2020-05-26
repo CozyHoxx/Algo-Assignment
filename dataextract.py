@@ -10,7 +10,7 @@ pandas.set_option('display.expand_frame_repr', False)
 
 
 def generate_bus_route():
-    data = pandas.read_excel('..\Dataset\MRT Bus Route.xlsx')
+    data = pandas.read_excel('Dataset\MRT Bus Route.xlsx')
     df = pandas.DataFrame(data, columns=['Bus Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
 
     bus_route_list = []
