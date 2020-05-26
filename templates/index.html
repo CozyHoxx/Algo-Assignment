@@ -1,0 +1,35 @@
+<html>
+<header><title>This is title</title></header>
+<body>
+<div class="row">
+        <div class="col">
+            <h1>Algo Map Ass</h1>
+            <hr>
+            <form action="/response" method="POST">
+
+                <div class="form-group">
+                    <label>Start_lat</label>
+                    <input type="number" step="any" class="form-control" id="start_lat" name="start_lat">
+                </div>
+
+                <div class="form-group">
+                    <label>Start_long</label>
+                    <input type="number" step="any" class="form-control" id="start_long" name="start_long">
+                </div>
+
+                <div class="form-group">
+                    <label>End_lat</label>
+                    <input type="number" step="any" class="form-control" id="end_lat" name="end_lat">
+                </div>
+
+                <div class="form-group">
+                    <label>End_long</label>
+                    <input type="number" step="any" class="form-control" id="end_long" name="end_long">
+                </div>
+                <button type="submit" class="btn btn-primary">Route me!</button>
+            </form>
+        </div>
+    </div>
+<iframe src="map.html" height="1000" width="1000"></iframe>
+</body>
+</html>
