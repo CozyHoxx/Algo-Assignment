@@ -1,8 +1,8 @@
 import pandas
 import transport_objects as tr
 
+# pandas.set_option('display.expand_frame_repr', False)
 
-pandas.set_option('display.expand_frame_repr', False)
 
 # Prototype data parser
 # Parse data from an excel file and create a list of route
@@ -10,7 +10,7 @@ pandas.set_option('display.expand_frame_repr', False)
 
 
 def generate_bus_route():
-    data = pandas.read_excel('Dataset\MRT Bus Route.xlsx')
+    data = pandas.read_excel('Dataset\\MRT Bus Route.xlsx')
     df = pandas.DataFrame(data, columns=['Bus Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
 
     bus_route_list = []
@@ -24,9 +24,37 @@ def generate_bus_route():
             current_route = df['Route Name'][i]
             stop += 1
             bus_route_list.append(
-                tr.BusObject(df['Route Name'][i], [df['Bus Stop Name'][i], df['Latitud'][i], df['Longitud'][i]]))
+                tr.TransportObject(df['Route Name'][i],
+                                   tr.Transport.BUS,
+                                   [df['Bus Stop Name'][i], df['Latitud'][i], df['Longitud'][i]]
+                                   )
+            )
         else:
             # We keep adding new stops to the current route.
             bus_route_list[stop].add_stops(df['Bus Stop Name'][i], df['Latitud'][i], df['Longitud'][i])
 
     return bus_route_list
+
+
+def generate_train_route():
+    data = pandas.read_excel('Dataset\\Train Route.xlsx')
+    df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
+
+    train_route_list = []
+    current_route = ""
+    stop = -1
+
+    for i in df.index:
+        if current_route != df['Route Name'][i]:
+            current_route = df['Route Name'][i]
+            stop += 1
+            train_route_list.append(
+                tr.TransportObject(df['Route Name'][i],
+                                   tr.Transport.TRAIN,
+                                   [df['Stop Name'][i], df['Latitud'][i], df['Longitud'][i]]
+                                   )
+            )
+        else:
+            train_route_list[stop].add_stops(df['Stop Name'][i], df['Latitud'][i], df['Longitud'][i])
+
+    return train_route_list
