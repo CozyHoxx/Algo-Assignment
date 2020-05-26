@@ -8,18 +8,19 @@ app.send_file_max_age_default = 0
 
 @app.route('/')
 def hello_world():
-    map_creator.generate_map()
+    map_creator.generate_route([3.167026, 101.558437], [0,0])
     return render_template('index.html')
 
 
 @app.route('/response', methods=['POST'])
 def response():
-    start_lat = float(request.form.get("start_lat"))
-    start_long = float(request.form.get("start_long"))
-    end_lat = float(request.form.get("end_lat"))
-    end_long = float(request.form.get("end_long"))
-    print(start_lat)
-    map_creator.generate_route([start_lat,start_long], [end_lat,end_long])
+    # start_lat = float(request.form.get("start_lat"))
+    # start_long = float(request.form.get("start_long"))
+    # end_lat = float(request.form.get("end_lat"))
+    # end_long = float(request.form.get("end_long"))
+
+    map_creator.generate_route([3.167026, 101.558437], [0,0])
+
     return render_template("index.html")
 
 @app.route('/map.html')
