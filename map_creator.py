@@ -31,9 +31,11 @@ def generate_map():
     gmap.marker(3.147331, 101.750363, "red")
 
     # Draw
-    gmap.draw('templates\map.html')
+    gmap.draw('templates\\map.html')
 
 def generate_route(start_pos, end_pos):
+
+    # os.remove('templates\\map.html')
 
     # start_pos [lat,lon] and end_pos [lat,lon]
     gmap = gmplot.GoogleMapPlotter(3.150447, 101.749015, 5)
@@ -54,4 +56,4 @@ def generate_route(start_pos, end_pos):
     gmap.marker(journey_lats[len(journey_lats) - 1], journey_lons[len(journey_lons) - 1], 'r')
 
     # Draw
-    gmap.draw('templates\\route.html')
+    gmap.draw('templates\\map.html')
