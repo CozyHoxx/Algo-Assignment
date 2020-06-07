@@ -1,5 +1,7 @@
 # This file is just a class file to store each transportation routes
 # Transportation types are now referred through enums
+
+# EDIT: NEVERMIND, IM TOSSING THIS PART OUT.
 from enum import Enum
 
 class Transport(Enum):
