@@ -48,10 +48,10 @@ def generate_map():
             color = 'b'
         gmap.plot([u[0],v[0]], [u[1],v[1]], color, edge_width=5)
     # Marker
-    hidden_gem_lat, hidden_gem_lon = 3.171593, 101.693305
-    gmap.marker(hidden_gem_lat, hidden_gem_lon, "cornflowerblue")
 
-    gmap.marker(3.147331, 101.750363, "red")
+    gmap.marker(3.128440, 101.650146, "cornflowerblue")
+
+    gmap.marker(3.155897, 101.611886, "red")
 
     # Draw
     gmap.draw('templates\\map.html')
@@ -61,37 +61,23 @@ def generate_route(start_pos, end_pos):
     # os.remove('templates\\map.html')
     start_lat = 3.167026
     start_lon = 101.558437
+    start_pos = (3.128440, 101.650146)
+    end_pos = (3.155897, 101.611886)
     # start_pos [lat,lon] and end_pos [lat,lon]
     gmap = gmplot.GoogleMapPlotter(start_lat, start_lon, 13)
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
     gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
     gmap.marker(start_lat, start_lon, 'r', title="START")
+
     # path finding logic may go here
-    # to be added later by SOMEONE ELSE DAMMIT
-    # JourneyObject is used btw, each point will be filled with a transport type.
+    # We start by connecting the start and end position to any neighbour nodes around it (at LEAST one)
+
+    generate_route()
 
     # PLACEHOLDER ROUTE
-    journey_list = sllist()
-    journey_list.appendleft(tr.JourneyPoint(start_pos[0], start_pos[1], tr.Transport.NULL))
-
-    for index, route in enumerate(bus_route_list[0].get_segment(0, 5)):
-        if index == 0:
-            journey_list.append(tr.JourneyPoint(route[1], route[2], tr.Transport.WALK))
-        else:
-            journey_list.append(tr.JourneyPoint(route[1], route[2], bus_route_list[0].type))
 
     # Draw out the lines
 
-    for node in journey_list.iternodes():
-        if node != journey_list.last:
-            if node.next.value.type == tr.Transport.WALK:
-                gmap.marker(node.next.value.lat, node.next.value.lon, 'b')
-                gmap.plot([node.value.lat, node.next.value.lat], [node.value.lon, node.next.value.lon], 'b',
-                          edge_width=5)
-            elif node.next.value.type == tr.Transport.BUS:
-                gmap.marker(node.next.value.lat, node.next.value.lon, 'g')
-                gmap.plot([node.value.lat, node.next.value.lat], [node.value.lon, node.next.value.lon], 'g',
-                          edge_width=5)
 
     # gmap.scatter(journey_lats, journey_lons, '#3B0B39', size=40, marker=False)
     # gmap.plot(journey_lats, journey_lons, 'b', edge_width=5)

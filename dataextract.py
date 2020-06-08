@@ -9,7 +9,7 @@ from enum import Enum
 # for now its just a bus route.
 
 # Graph used is weighted directed graph
-G = nx.DiGraph()
+G = nx.MultiDiGraph()
 
 
 class Transport(Enum):
@@ -89,16 +89,48 @@ def get_graph():
     return G
 
 
+def generate_route():
+    start_pos = (3.128440, 101.650146)
+    end_pos = (3.155897, 101.611886)
+    print("Connecting start and end......")
+    isStartStation = False
+    isEndStation = False
+    if not G.has_node(start_pos):
+        G.add_node(start_pos, stop_name='starting')
+        isStartStation = True
+    if not G.has_node(end_pos):
+        G.add_node(end_pos,stop_name='ending')
+        isEndStation = True
+
+    # Connect node to nearby neighbours
+
+    for p, d in G.nodes(data=True):
+        dist = distance.distance(start_pos, (p[0], p[1])).kilometers
+        if dist < 0.3:
+            G.add_edge(start_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
+                       weight=dist)
+
+    for p, d in G.nodes(data=True):
+        dist = distance.distance(end_pos, (p[0], p[1])).kilometers
+        if dist < 0.3:
+            G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
+                       weight=dist)
+
+
+
 generate_bus_route(G)
 generate_train_route(G)
-for n, data in G.nodes(data=True):
-    print(n)
-    print(data['stop_name'])
-    print(data['route_name'])
+# for n, data in G.nodes(data=True):
+#     print(n)
+#     print(data['stop_name'])
+#     print(data['route_name'])
 generate_walking_route()
-for u, v, a in G.edges(data=True):
-    print(str(u) + "->" + str(v))
-    print(str(a['weight']) + "KM")
+# for u, v, a in G.edges(data=True):
+#     print(str(u) + "->" + str(v))
+#     print(str(a['weight']) + "KM")
 
-print(G.nodes)
-print(G.edges)
+
+generate_route()
+
+# print(G.nodes)
+# print(G.edges)
