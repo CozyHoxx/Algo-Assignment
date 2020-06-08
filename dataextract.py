@@ -8,6 +8,7 @@ from enum import Enum
 # Parse data from an excel file and create a list of route
 # for now its just a bus route.
 
+# Graph used is weighted directed graph
 G = nx.DiGraph()
 
 
