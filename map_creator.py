@@ -10,8 +10,8 @@ import os
 routes = dat.get_graph()
 gmap = gmplot.GoogleMapPlotter(3.150447, 101.749015, 13)
 
-def generate_map():
 
+def generate_map():
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
     gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
     # data here
@@ -46,26 +46,23 @@ def generate_map():
             color = 'y'
         else:
             color = 'b'
-        gmap.plot([u[0],v[0]], [u[1],v[1]], color, edge_width=5)
+        gmap.plot([u[0], v[0]], [u[1], v[1]], color, edge_width=5)
 
     start_pos = (3.12986, 101.64247)
     end_pos = (3.128304, 101.64286)
     gmap.marker(start_pos[0], start_pos[1], "red", title="START")
     gmap.marker(end_pos[0], end_pos[1], "red", title="END")
 
-
     # Draw
     gmap.draw('templates\\map.html')
 
 
-
 def generate_route():
     # os.remove('templates\\map.html')
-    start_pos = (3.128440, 101.650146) # FSKTM
+    start_pos = (3.128440, 101.650146)  # FSKTM
     # start_pos = (3.119611, 101.643204) # MRT Phileo Station
     # end_pos = (3.128304, 101.64286)  # MRT Phileo Station
-    end_pos = (3.13732, 101.68734) # MRT PB Daman
-
+    end_pos = (3.13732, 101.68734)  # MRT PB Daman
 
     # start_pos [lat,lon] and end_pos [lat,lon]
     # gmap = gmplot.GoogleMapPlotter(start_lat, start_lon, 13)
@@ -81,7 +78,6 @@ def generate_route():
     # PLACEHOLDER ROUTE
     # generate_map()
     # Draw out the lines
-
 
     # gmap.scatter(journey_lats, journey_lons, '#3B0B39', size=40, marker=False)
     gmap.plot(lat, lon, 'g', edge_width=5)
