@@ -51,6 +51,9 @@ def get_route_from_file(df: pandas.DataFrame, type):
             G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
             G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=type,
                        weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
+            if type == Transport.TRAIN:
+                G.add_edge( (lat, lon), (prev_lat, prev_lon), route_name=current_route, type=type,
+                           weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
         generate_walking_route(lat, lon, G.nodes[(lat, lon)])
         prev_lat = lat
         prev_lon = lon
@@ -70,9 +73,11 @@ def generate_walking_route(lat, lon, curr: G.nodes):
 
     for neigh, neigh_data in G.nodes(data=True):
         dist = distance.distance((lat, lon), (neigh[0], neigh[1])).kilometers
-        if dist < 0.2:
+        if dist < 0.5:
             if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat,lon), neigh)):
                 G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='walk', type=Transport.WALK,
+                           weight=dist)
+                G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='walk', type=Transport.WALK,
                            weight=dist)
                 print("Added" + " Distance = " + str(dist))
 
@@ -81,9 +86,7 @@ def get_graph():
     return G
 
 
-def generate_route():
-    start_pos = (3.128440, 101.650146)
-    end_pos = (3.128419, 101.642747)
+def generate_path(start_pos, end_pos):
     print("Connecting start and end......")
     isStartStation = False
     isEndStation = False
@@ -108,8 +111,14 @@ def generate_route():
             G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
                        weight=dist)
 
-    path = nx.algorithms.dijkstra_path(G, start_pos, end_pos)
+    path = nx.algorithms.dijkstra_path(G, start_pos, end_pos, weight='weight')
+    # path = nx.algorithms.bellman_ford_path(G, start_pos, end_pos, weight='weight')
+    # print("Using Johnsons...")
+    # paths = nx.algorithms.johnson(G)
+    # print(paths[start_pos][end_pos])
     print(path)
+    # path = nx.algorithms.shortest_path(G, start_pos, end_pos)
+    return path
 
 
 generate_bus_route(G)
@@ -124,7 +133,7 @@ generate_train_route(G)
 #     print(str(a['weight']) + "KM")
 
 
-generate_route()
+# generate_route()
 
 # print(G.nodes)
 # print(G.edges)
