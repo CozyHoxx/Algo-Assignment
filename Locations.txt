@@ -1,31 +1,24 @@
-Low Yat Plaza
-7, Jalan Bintang, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
-3.144201, 101.709943
+Fort Cornwallis, Penang
+5.41123, 100.33543
+5° 24' 40.428'' N
+100° 20' 7.548'' E
 
-Suria KLCC
-241, Suria KLCC, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
-3.158151, 101.711561
+Cameron Highland Butterfly Garden
+4.50327, 101.3981
+4° 29' 28.356'' N
+101° 23' 16.836'' E
 
-UM CENTRAL
-50603 Kuala Lumpur, Federal Territory of Kuala Lumpur
-3.121164, 101.653644
+Dataran Lang, Langkawi
+6.32649, 99.8432
+6° 20' 4.992'' N
+99° 47' 50.964'' E
 
-Batu Caves
-Gombak, 68100 Batu Caves, Selangor
-3.237904, 101.684074
+Taman Anggur, Perlis
+6.4414, 100.19862
+6° 26' 23.784'' N
+100° 11' 34.476'' E
 
-Dataran Merdeka
-Jalan Raja, City Centre, 50050 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
-3.149307, 101.693728
-
-Sunway Pyramid
-Sunway Pyramid, No. 3, Jalan PJS 11/15, Sunway City, 47500 Petaling Jaya, Selangor
-3.073419, 101.607947
-
-Zoo Negara Malaysia
-Jalan Taman Zooview, Taman Zooview, 68000 Ampang, Selangor
-3.208733, 101.757921
-
-KL Sentral
-Kuala Lumpur Sentral, 50470 Kuala Lumpur, Federal Territory of Kuala Lumpur
-3.134349, 101.686321
+Taiping Lake Garden, Perak
+4.849050, 100.739113
+4° 50' 56.58'' N
+100° 44' 20.796'' E
