@@ -72,7 +72,7 @@ def generate_route(start_pos, end_pos):
     # path finding logic may go here
     # We start by connecting the start and end position to any neighbour nodes around it (at LEAST one)
 
-    generate_route()
+    path = generate_route()
 
     # PLACEHOLDER ROUTE
 

@@ -22,35 +22,17 @@ class Transport(Enum):
 
 def generate_bus_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\MRT Bus Route.xlsx')
-    df = pandas.DataFrame(data, columns=['Bus Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
-
-    # bus_route_list = []
-    current_route = ""
-    stop = -1
-    prev_lat = 0.0
-    prev_lon = 0.0
-    # This file is sorted according to routes, so we just check if the row is referring to the same route each loop.
-    for i in df.index:
-        lat = df['Latitud'][i]
-        lon = df['Longitud'][i]
-        stop_name = df['Bus Stop Name'][i]
-        # We insert a new route if its a new one
-        if current_route != df['Route Name'][i]:
-            current_route = df['Route Name'][i]
-            G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
-        else:
-            # We keep adding new stops to the current route.
-            G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
-            G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=Transport.BUS,
-                       weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
-        prev_lat = lat
-        prev_lon = lon
+    df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
+    get_route_from_file(df, Transport.BUS)
 
 
 def generate_train_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\Train Route.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
+    get_route_from_file(df, Transport.TRAIN)
 
+
+def get_route_from_file(df: pandas.DataFrame, type):
     current_route = ""
     stop = -1
     prev_lat = 0.0
@@ -63,26 +45,36 @@ def generate_train_route(graph: nx.Graph):
         if current_route != df['Route Name'][i]:
             current_route = df['Route Name'][i]
             G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
+
         else:
             # We keep adding new stops to the current route.
             G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
-            G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=Transport.TRAIN,
+            G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=type,
                        weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
+        generate_walking_route(lat, lon, G.nodes[(lat, lon)])
         prev_lat = lat
         prev_lon = lon
 
 
-def generate_walking_route():
-    count = 0
-    for curr, curr_data in G.nodes(data=True):
-        for neigh, neigh_data in G.nodes(data=True):
-            dist = distance.distance((curr[0], curr[1]), (neigh[0], neigh[1])).kilometers
-            if dist < 0.3:
-                if (curr_data['route_name'] != neigh_data['route_name']) & (not G.has_edge(curr, neigh)):
-                    G.add_edge((curr[0], curr[1]), (neigh[0], neigh[1]), route_name='walk', type=Transport.WALK,
+def generate_walking_route(lat, lon, curr: G.nodes):
+    # count = 0
+    # for curr, curr_data in G.nodes(data=True):
+    #     for neigh, neigh_data in G.nodes(data=True):
+    #         dist = distance.distance((curr[0], curr[1]), (neigh[0], neigh[1])).kilometers
+    #         if dist < 0.3:
+    #             if (curr_data['route_name'] != neigh_data['route_name']) & (not G.has_edge(curr, neigh)):
+    #                 G.add_edge((curr[0], curr[1]), (neigh[0], neigh[1]), route_name='walk', type=Transport.WALK,
+    #                        weight=dist)
+    #                 count+=1
+    #                 print("Added" + str(count) + "Distance = " + str(dist))
+
+    for neigh, neigh_data in G.nodes(data=True):
+        dist = distance.distance((lat, lon), (neigh[0], neigh[1])).kilometers
+        if dist < 0.2:
+            if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat,lon), neigh)):
+                G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='walk', type=Transport.WALK,
                            weight=dist)
-                    count+=1
-                    print("Added" + str(count) + "Distance = " + str(dist))
+                print("Added" + " Distance = " + str(dist))
 
 
 def get_graph():
@@ -91,7 +83,7 @@ def get_graph():
 
 def generate_route():
     start_pos = (3.128440, 101.650146)
-    end_pos = (3.155897, 101.611886)
+    end_pos = (3.128419, 101.642747)
     print("Connecting start and end......")
     isStartStation = False
     isEndStation = False
@@ -116,6 +108,8 @@ def generate_route():
             G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
                        weight=dist)
 
+    path = nx.algorithms.dijkstra_path(G, start_pos, end_pos)
+    print(path)
 
 
 generate_bus_route(G)
@@ -124,7 +118,7 @@ generate_train_route(G)
 #     print(n)
 #     print(data['stop_name'])
 #     print(data['route_name'])
-generate_walking_route()
+# generate_walking_route()
 # for u, v, a in G.edges(data=True):
 #     print(str(u) + "->" + str(v))
 #     print(str(a['weight']) + "KM")
