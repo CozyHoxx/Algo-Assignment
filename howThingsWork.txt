@@ -33,5 +33,8 @@ After the shortest path is generated, it is then sent back to the map_creator's 
 
 And that's the basic gist of it.
 
--Cheng Wai Jun 10/6/2020
+Edits:
+10/6/2020
+initial explaination
+-Cheng Wai Jun
 ================================================================================================
