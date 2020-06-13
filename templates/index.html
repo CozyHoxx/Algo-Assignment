@@ -1,15 +1,130 @@
-<html>
-<header><title>This is title</title></header>
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="asset/styles.css">
+	<title>Hello, world!</title>
+</head>
 <body>
-<div class="row">
-        <div class="col">
-            <h1>Algo Map Ass</h1>
-            <button type="submit" class="btn btn-primary">Route 1</button>
-            <button type="submit" class="btn btn-primary">Route 2</button>
-            <button type="submit" class="btn btn-primary">Route 3</button>
-        </div>
-    </div>
-<br>
-<iframe src="map.html" height="800" width="800"></iframe>
+	<nav class="navbar navbar-expand-md navbar-light fixed-top " style="background-color: #e3f2fd;">
+		<a class="navbar-brand" style="color:black;">
+			<img src="asset/icons8-google-maps.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+			Algorithm Assignment
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+				aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<br>
+	<div class="container-fluid">
+		<form>
+			<div class="form-row">
+				<label for="origin" class="col-form-label">From: </label>
+				<div class="col col-sm-2 ">
+					<input type="text" readonly class="form-control-plaintext" id="origin"
+						   value="University Malaya">
+				</div>
+				<label for="destination" class="col-form-label">Destination: </label>
+				<div class="col col-sm-4 ">
+					<select class="form-control" id="destination">
+						<option>Fort Cornwallis, Penang</option>
+						<option>Cameron Highland Butterfly Garden</option>
+						<option>Dataran Lang, Langkawi</option>
+						<option>Taman Anggur, Perlis</option>
+						<option>Taiping Lake Garden, Perak</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-primary mb-2">Go!</button>
+			</div>
+		</form>
+		<br>
+		<div class="row mb-3">
+			<div class="col-md-8 themed-grid-col">
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="map.html" width="auto"></iframe>
+				</div>
+			</div>
+			<div class="col-md-4 themed-grid-col">
+				<!-- Nav tabs -->
+				<ul class="nav nav-pills">
+					<li class="nav-item pill-1">
+						<a class="nav-link active" data-toggle="tab" href="#route1">Route 1</a>
+					</li>
+					<li class="nav-item pill-2">
+						<a class="nav-link" data-toggle="tab" href="#route2">Route 2</a>
+					</li>
+					<li class="nav-item pill-3">
+						<a class="nav-link" data-toggle="tab" href="#route3">Route 3</a>
+					</li>
+					<li class="nav-item pill-4">
+						<a class="nav-link" data-toggle="tab" href="#route4">Route 4</a>
+					</li>
+					<li class="nav-item pill-5">
+						<a class="nav-link" data-toggle="tab" href="#route5">Route 5</a>
+					</li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane container active" id="route1">Route Number 1 here!</div>
+					<div class="tab-pane container fade" id="route2">Route Number 2 here!</div>
+					<div class="tab-pane container fade" id="route3">Route Number 3 here!</div>
+					<div class="tab-pane container fade" id="route4">Route Number 4 here!</div>
+					<div class="tab-pane container fade" id="route5">
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+						<p>This is a paragraph.</p>
+						<p>This is another paragraph.</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+			crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous"></script>
 </body>
 </html>
