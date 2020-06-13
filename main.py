@@ -8,7 +8,7 @@ app.send_file_max_age_default = 0
 
 @app.route('/')
 def hello_world():
-    map_creator.generate_route([3.167026, 101.558437], [0, 0])
+    # map_creator.generate_route([3.167026, 101.558437], [0, 0])
     return render_template('index.html')
 
 
