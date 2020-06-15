@@ -19,10 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efbb2d7b-3860-474b-b98e-6ec0a94a80d3" name="Default Changelist" comment="Update gmap icon">
+    <list default="true" id="efbb2d7b-3860-474b-b98e-6ec0a94a80d3" name="Default Changelist" comment="Refined GUI even further">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/full_map_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/full_map_page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592066176970</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refined GUI even further">
+      <created>1592215189777</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1592215189777</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,7 +127,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Pycharm stuff" />
     <MESSAGE value="Update gmap icon" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update gmap icon" />
+    <MESSAGE value="Refined GUI even further" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refined GUI even further" />
   </component>
   <component name="WindowStateProjectService">
     <state x="379" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592063824774">
@@ -136,22 +143,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="524" y="115" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1592211574028" />
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1592214953055">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1592215228499">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1592214953055" />
-    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1592214953055">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1592215228499" />
+    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1592215228499">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1592214953055" />
-    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1592214953055">
+    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1592215228499" />
+    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1592215228499">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1592214953055" />
-    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1592214953055">
+    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1592215228499" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1592215228499">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1592214953055" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1592215228499" />
     <state width="1515" height="263" key="GridCell.Tab.1.bottom" timestamp="1592212965131">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -172,14 +179,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="294" y="64" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1592063720158" />
-    <state x="517" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592066178261">
+    <state x="517" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592215209379">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="517" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592066178261" />
-    <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592189040240">
+    <state x="517" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592215209379" />
+    <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592215251084">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1592189040240" />
+    <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1592215251084" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
