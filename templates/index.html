@@ -9,13 +9,13 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-	<title>Hello, world!</title>
+	<title>Main Page</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: #007bff;">
 		<a class="navbar-brand" style="color:white;">
 			<img src="{{ url_for('static', filename='gmap.svg') }}" width="30" height="30"
-				 class="d-inline-block align-top" alt=""style="background-color: #ffffff;">
+				 class="d-inline-block align-top" alt="" style="background-color: #ffffff;">
 			Algorithm Assignment
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -28,7 +28,10 @@
 					<a class="nav-link" href="#">Map <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Word Graph</a>
+					<a class="nav-link" href="/full_map">Full Map</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/graph">Word Graph</a>
 				</li>
 			</ul>
 		</div>
@@ -37,7 +40,7 @@
 	<br>
 	<br>
 	<div class="container-fluid">
-		<form>
+		<form action="/response" method="POST">
 			<div class="form-row">
 				<label for="origin" class="col-form-label">From: </label>
 				<div class="col col-sm-2 ">
@@ -46,12 +49,22 @@
 				</div>
 				<label for="destination" class="col-form-label">Destination: </label>
 				<div class="col col-sm-4 ">
-					<select class="form-control" id="destination">
-						<option>Fort Cornwallis, Penang</option>
-						<option>Cameron Highland Butterfly Garden</option>
-						<option>Dataran Lang, Langkawi</option>
-						<option>Taman Anggur, Perlis</option>
-						<option>Taiping Lake Garden, Perak</option>
+					<select class="form-control" id="destination" name="destination">
+						<option {% if dest=='Penang' %} selected {% endif %} value="Penang">
+							Fort Cornwallis, Penang
+						</option>
+						<option {% if dest=='Cameron' %} selected {% endif %} value="Cameron">
+							Cameron Highland Butterfly Garden
+						</option>
+						<option {% if dest=='Langkawi' %} selected {% endif %} value="Langkawi">
+							Dataran Lang, Langkawi
+						</option>
+						<option {% if dest=='Perlis' %} selected {% endif %} value="Perlis">
+							Taman Anggur, Perlis
+						</option>
+						<option {% if dest=='Perak' %} selected {% endif %} value="Perak">
+							Taiping Lake Garden, Perak
+						</option>
 					</select>
 				</div>
 				<button type="submit" class="btn btn-primary mb-2">Go!</button>
@@ -86,41 +99,11 @@
 
 				<!-- Tab panes -->
 				<div class="tab-content">
-					<div class="tab-pane container active" id="route1">Route Number 1 here!</div>
-					<div class="tab-pane container fade" id="route2">Route Number 2 here!</div>
-					<div class="tab-pane container fade" id="route3">Route Number 3 here!</div>
-					<div class="tab-pane container fade" id="route4">Route Number 4 here!</div>
-					<div class="tab-pane container fade" id="route5">
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-						<p>This is a paragraph.</p>
-						<p>This is another paragraph.</p>
-
-					</div>
+					<div class="tab-pane container active" id="route1">{{ route_1['route_1'] }}</div>
+					<div class="tab-pane container fade" id="route2">{{ route_2['route_2'] }}</div>
+					<div class="tab-pane container fade" id="route3">{{ route_3['route_3'] }}</div>
+					<div class="tab-pane container fade" id="route4">{{ route_4['route_4'] }}</div>
+					<div class="tab-pane container fade" id="route5">{{ route_5['route_5'] }}</div>
 				</div>
 			</div>
 		</div>
