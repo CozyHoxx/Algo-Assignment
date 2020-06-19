@@ -42,8 +42,8 @@ def generate_map():
 
 def generate_route():
     # start_pos [lat,lon] and end_pos [lat,lon]
-    start_pos = (3.128440, 101.650146)  # FSKTM
-    end_pos = (3.13732, 101.68734)  # MRT PB Daman
+    start_pos = (6.3322, 99.7322)  # FSKTM
+    end_pos = (1.5818,	103.654083)  # MRT PB Daman
 
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
     gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
@@ -53,13 +53,14 @@ def generate_route():
     # We start by connecting the start and end position to any neighbour nodes around it (at LEAST one)
 
     path = dat.generate_path(start_pos, end_pos)
-    lat, lon = map(list, zip(*path))
+    for parth in path:
+        lat, lon = map(list, zip(*parth))
 
-    gmap.plot(lat, lon, 'w', edge_width=5)
+        gmap.plot(lat, lon, 'w', edge_width=5)
 
     # Draw
     gmap.draw('templates\\map.html')
 
 
 generate_map()
-# generate_route()
+generate_route()
