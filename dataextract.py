@@ -138,8 +138,6 @@ def generate_path(start_pos, end_pos):
     print(path)
     list_path = list(islice(nx.shortest_simple_paths(G, start_pos, end_pos, weight='weight'), 10))
 
-    for parth in list_path:
-        print(parth)
     return list_path
 
 
