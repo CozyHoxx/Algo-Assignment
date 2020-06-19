@@ -3,6 +3,7 @@ import pandas
 import networkx as nx
 from geopy import distance
 from enum import Enum
+from itertools import islice
 import matplotlib.pyplot as plt
 
 # Prototype data parser
@@ -11,8 +12,8 @@ import matplotlib.pyplot as plt
 
 # The Graph used is weighted directed graph
 # G is weighted directed graph
-G = nx.MultiDiGraph()
-H = nx.MultiDiGraph()
+G = nx.DiGraph()
+H = nx.DiGraph()
 #this comment is to test github
 
 
@@ -135,16 +136,18 @@ def generate_path(start_pos, end_pos):
 
     path = nx.algorithms.dijkstra_path(G, start_pos, end_pos, weight='weight')
     print(path)
+    list_path = list(islice(nx.shortest_simple_paths(G, start_pos, end_pos, weight='weight'), 10))
 
-    return path
+    return list_path
 
 
-generate_bus_route(G)
-generate_other_bus_route(G)
-generate_train_route(G)
+# generate_bus_route(G)
+# generate_other_bus_route(G)
+# generate_train_route(G)
 generate_airplane_route(G)
 G = nx.compose(G, H)  # Combine G and H
 
+print(G.order())
 # nx.draw(H) # Airport
 # nx.draw(G) # Train + Bus route
 # nx.draw(F)
