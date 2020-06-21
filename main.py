@@ -22,6 +22,7 @@ def hello_world():
     route_3 = {'route_3': 'Route 3 here!'}
     route_4 = {'route_4': 'Route 4 here!'}
     route_5 = {'route_5': 'Route 5 here!'}
+    map_creator.generate_map()
     # map_creator.generate_route([3.167026, 101.558437], [0, 0])
     return render_template('index.html', route_1=route_1, route_2=route_2, route_3=route_3, route_4=route_4,
                            route_5=route_5)
