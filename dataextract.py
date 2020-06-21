@@ -22,6 +22,7 @@ class Transport(Enum):
     TRAIN = 2
     AIRPLANE = 3
     WALK = 4
+    TAXI = 5
 
 
 def generate_bus_route(graph: nx.Graph):
@@ -37,7 +38,10 @@ def generate_other_bus_route(graph: nx.Graph):
 
 
 def generate_train_route(graph: nx.Graph):
-    data = pandas.read_excel('Dataset\\Train Route.xlsx')
+    data = pandas.read_excel('Dataset\\ETS Train.xlsx')
+    df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
+    get_route_from_file(df, Transport.TRAIN)
+    data = pandas.read_excel('Dataset\\KTM Komuter.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
     get_route_from_file(df, Transport.TRAIN)
 
@@ -58,7 +62,7 @@ def get_airport_route_from_file(df: pandas.DataFrame, type):
     for node in H.nodes(data=True):
         for other_node in H.nodes(data=True):
             if node != other_node:
-                H.add_edge(node[0], other_node[0], route_name="Airplane", type=Transport.AIRPLANE,
+                H.add_edge(node[0], other_node[0], route_name='airplane', type=Transport.AIRPLANE,
                            weight=distance.distance(node[0], other_node[0]).kilometers)
 
 
@@ -84,7 +88,7 @@ def get_route_from_file(df: pandas.DataFrame, type):
             if type == Transport.TRAIN:
                 G.add_edge((lat, lon), (prev_lat, prev_lon), route_name=current_route, type=type,
                            weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
-        # generate_walking_route(lat, lon, G.nodes[(lat, lon)])
+        generate_walking_route(lat, lon, G.nodes[(lat, lon)])
         prev_lat = lat
         prev_lon = lon
 
@@ -93,15 +97,19 @@ def get_route_from_file(df: pandas.DataFrame, type):
 # ie; Phileo Damansara Bus Stop + Phileo Damansara Train Station
 def generate_walking_route(lat, lon, curr: G.nodes):
     for neigh, neigh_data in G.nodes(data=True):
-
         dist = distance.distance((lat, lon), (neigh[0], neigh[1])).kilometers
-        if dist < 0.5:
+        if dist < 1:
             if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
                 G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='walk', type=Transport.WALK,
                            weight=dist)
                 G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='walk', type=Transport.WALK,
                            weight=dist)
-                print("Added Distance = " + str(dist))
+        elif dist < 10:
+            if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
+                G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='taxi', type=Transport.TAXI,
+                           weight=dist)
+                G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='taxi', type=Transport.TAXI,
+                           weight=dist)
 
 
 def get_graph():
@@ -149,9 +157,9 @@ def generate_path(start_pos, end_pos):
 
 # generate_bus_route(G)
 # generate_other_bus_route(G)
-# generate_train_route(G)
 generate_airplane_route(G)
 G = nx.compose(G, H)  # Combine G and H
+generate_train_route(G)
 
 print(G.order())
 # nx.draw(H) # Airport

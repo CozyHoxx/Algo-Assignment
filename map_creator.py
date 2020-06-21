@@ -32,6 +32,8 @@ def generate_map():
             color = 'b'
         elif data['type'] == Transport.AIRPLANE:
             color = 'k'
+        elif data['type'] == Transport.TAXI:
+            color = 'g'
         else:
             color = 'b'
         gmap.scatter([u[0], v[0]], [u[1], v[1]], color, edge_width=5)
