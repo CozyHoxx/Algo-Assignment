@@ -53,7 +53,7 @@ def get_airport_route_from_file(df: pandas.DataFrame, type):
     for i in df.index:
         lat = df['Latitud'][i]
         lon = df['Longitud'][i]
-        H.add_node((lat, lon), airport=df['Airport'][i], route_name=df['Route Name'][i])
+        H.add_node((lat, lon), stop_name=df['Airport'][i], route_name=df['Route Name'][i])
 
     for node in H.nodes(data=True):
         for other_node in H.nodes(data=True):
@@ -113,10 +113,10 @@ def generate_path(start_pos, end_pos):
     isStartStation = False
     isEndStation = False
     if not G.has_node(start_pos):
-        G.add_node(start_pos, stop_name='starting')
+        G.add_node(start_pos, stop_name='Start point')
         isStartStation = True
     if not G.has_node(end_pos):
-        G.add_node(end_pos, stop_name='ending')
+        G.add_node(end_pos, stop_name='End point')
         isEndStation = True
 
     # Connect node to nearby neighbours
@@ -124,13 +124,13 @@ def generate_path(start_pos, end_pos):
     for p, d in G.nodes(data=True):
         dist = distance.distance(start_pos, (p[0], p[1])).kilometers
         if dist < 0.3:
-            G.add_edge(start_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
+            G.add_edge(start_pos, (p[0], p[1]), route_name='walk', type=Transport.WALK,
                        weight=dist)
 
     for p, d in G.nodes(data=True):
         dist = distance.distance(end_pos, (p[0], p[1])).kilometers
         if dist < 0.3:
-            G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
+            G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.WALK,
                        weight=dist)
 
     # path = nx.algorithms.dijkstra_path(G, start_pos, end_pos, weight='weight')
