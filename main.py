@@ -22,6 +22,7 @@ def hello_world():
     route_3 = {'route_3': 'Route 3 here!'}
     route_4 = {'route_4': 'Route 4 here!'}
     route_5 = {'route_5': 'Route 5 here!'}
+    map_creator.generate_map()
     # map_creator.generate_route([3.167026, 101.558437], [0, 0])
     return render_template('index.html', route_1=route_1, route_2=route_2, route_3=route_3, route_4=route_4,
                            route_5=route_5)
@@ -50,13 +51,14 @@ def response():
         dest_name = "Taiping Lake Garden, Perak"
     print(lat, lon)
     # map_creator.generate_route([3.167026, 101.558437], [lat, lon])
-
+    route_list = map_creator.generate_route()
+    print(route_list)
     # Ideally, if can la, return a list of routes for me to display thru here.
-    route_1 = {'route_1': 'Route 1 to ' + dest_name + ' here!'}
-    route_2 = {'route_2': 'Route 2 to ' + dest_name + ' here!'}
-    route_3 = {'route_3': 'Route 3 to ' + dest_name + ' here!'}
-    route_4 = {'route_4': 'Route 4 to ' + dest_name + ' here!'}
-    route_5 = {'route_5': 'Route 5 to ' + dest_name + ' here!'}
+    route_1 = {'route_1': route_list[0]}
+    route_2 = {'route_2': route_list[1]}
+    route_3 = {'route_3': route_list[2]}
+    route_4 = {'route_4': route_list[3]}
+    route_5 = {'route_5': route_list[4]}
     return render_template('index.html', route_1=route_1, route_2=route_2, route_3=route_3, route_4=route_4,
                            route_5=route_5, dest=destination)
 

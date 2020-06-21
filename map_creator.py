@@ -1,6 +1,7 @@
 import gmplot
 import dataextract as dat
 import itertools
+from dataextract import Transport
 import networkx as nx
 from pyllist import sllist, sllistnode
 import os
@@ -8,7 +9,7 @@ import os
 # bus_route_list = dat.generate_bus_route()
 # train_route_list = dat.generate_train_route()
 routes = dat.get_graph()
-gmap = gmplot.GoogleMapPlotter(3.147447, 101.655015, 13)
+gmap = gmplot.GoogleMapPlotter(3.147447, 101.655015, 7)
 
 
 def generate_map():
@@ -23,14 +24,16 @@ def generate_map():
     gmap.scatter(lat, lon, '#939393', size=40, marker=False)
 
     for u, v, data in routes.edges(data=True):
-        if data['type'] == dat.Transport.BUS:
+        if data['type'] == Transport.BUS:
             color = 'r'
-        elif data['type'] == dat.Transport.WALK:
+        elif data['type'] == Transport.WALK:
             color = 'y'
-        elif data['type'] == dat.Transport.TRAIN:
+        elif data['type'] == Transport.TRAIN:
             color = 'b'
-        elif data['type'] == dat.Transport.AIRPLANE:
+        elif data['type'] == Transport.AIRPLANE:
             color = 'k'
+        elif data['type'] == Transport.TAXI:
+            color = 'g'
         else:
             color = 'b'
         gmap.scatter([u[0], v[0]], [u[1], v[1]], color, edge_width=5)
@@ -44,7 +47,6 @@ def generate_route():
     # start_pos [lat,lon] and end_pos [lat,lon]
     start_pos = (6.3322, 99.7322)  # FSKTM
     end_pos = (1.5818,	103.654083)  # MRT PB Daman
-
     colours = itertools.cycle(['#0275d8', '#5cb85c', '#f0ad4e', '#d9534f', '#292b2c'])
 
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
@@ -55,20 +57,36 @@ def generate_route():
     # We start by connecting the start and end position to any neighbour nodes around it (at LEAST one)
 
     route_subgraph = dat.generate_path(start_pos, end_pos)
-    for routes in route_subgraph:
+    route_list = []
+    for curr_route in route_subgraph:
         print("NEXT ROUTE")
-        print(routes.edges())
-        lat, lon = map(list, zip(*routes.nodes))
-        for u, v, data in routes.edges(data=True):
+        print(curr_route.edges())
+        lat, lon = map(list, zip(*curr_route.nodes))
+        route_string = ""
+        for u, v, data in curr_route.edges(data=True):
             curr_color = next(colours)
+            stop1 = routes.nodes[u]['stop_name']
+            stop2 = routes.nodes[v]['stop_name']
+            transport_type = " "
+            if data['type'] == Transport.WALK:
+                transport_type = "walking"
+            elif data['type'] == Transport.BUS:
+                transport_type = "bus"
+            elif data['type'] == Transport.TRAIN:
+                transport_type = "train"
+            elif data['type'] == Transport.AIRPLANE:
+                transport_type = "airplane"
+            print(stop1 + " to " + stop2 + " by " + str(transport_type))
+            route_string += stop1 + " to " + stop2 + " by " + str(transport_type)
             # gmap.scatter([u[0], v[0]], [u[1], v[1]], 'r', edge_width=5)
             gmap.plot([u[0], v[0]], [u[1], v[1]], curr_color, edge_width=2)
-
+        route_list.append(route_string)
 
         # gmap.plot(lat, lon, 'w', edge_width=5)
 
     # Draw
     gmap.draw('templates\\map.html')
+    return route_list
 
 
 generate_map()
