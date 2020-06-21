@@ -6,8 +6,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import json
-import array as ar
+import collections
 from nltk.corpus import stopwords
 
 class Node():
@@ -159,11 +158,36 @@ Health officials also confirmed a new imported case. Infections brought in by Ch
 
 article.mani()
 print(article.pos_neg_score())
-print(len(article.wordfreq))
+print(len(article.wordfreq) + len(article.stopfreq))
+
+tw = []
+hz = []
+for key, value in article.wordfreq.items():
+    tw.append(key)
+    hz.append(value)
+Word_dict = {'Total Word':pd.Series(tw), 'Frequency':pd.Series(hz)}
+df3 = pd.DataFrame(Word_dict)
+
+df3 = df3.sort_values('Frequency',ascending=False)
+print(df3.head(n=10),"\n")
+df3.iloc[0:11].plot.bar(x='Total Word')
+
+
+tw1 = []
+hz1 = []
+for key, value in article.stopfreq.items():
+    tw1.append(key)
+    hz1.append(value)
+Stop_dict = {'Stop Word':pd.Series(tw1), 'Frequency':pd.Series(hz1)}
+df4 = pd.DataFrame(Stop_dict)
+
+df4 = df4.sort_values('Frequency',ascending=False)
+print(df4.head(n=10),"\n")
+df4.iloc[0:11].plot.bar(x='Stop Word')
+
 #initialise lists
 wrd = []
 freq = []
-
 #append values to the lists
 for key, value in article.goodfreq.items():
     wrd.append(key)
@@ -172,12 +196,15 @@ Good_dict = {'Word':pd.Series(wrd), 'Good Frequency':pd.Series(freq)}
 
 #create DataFrame from above dictionary
 df = pd.DataFrame(Good_dict)
-print(df,"\n")
+#print(df,"\n")
+ax = df.plot.bar(x = 'Word')
+fig = ax.get_figure()
+fig.savefig('PosBar.png')
+
 
 #initialise lists
 wrd1 = []
 freq1 = []
-
 #append values to the lists
 for key, value in article.badfreq.items():
     wrd1.append(key)
@@ -186,10 +213,17 @@ Bad_dict = {'Word':pd.Series(wrd1), 'Bad Frequency':pd.Series(freq1)}
 
 #create DataFrame from above dictionary
 df2 = pd.DataFrame(Bad_dict)
-print(df2)
+#print(df2)
+ax = df2.plot.bar(x = 'Word')
+fig = ax.get_figure()
+fig.savefig('NegBar.png')
 
+
+#Generate Histogram for Positive & Negative words
 ax = df.plot.hist()
-df2.plot.hist(ax=ax)
+ax = df2.plot.hist(ax=ax)
+fig = ax.get_figure()
+fig.savefig('PosNegHist.png')
 
 
 #display DataFrame as bar graph
