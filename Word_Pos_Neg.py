@@ -10,9 +10,6 @@ import json
 import array as ar
 from nltk.corpus import stopwords
 
-word = []
-freq = []
-
 class Node():
     def __init__(self, End):
         self.Amap = {}
@@ -128,31 +125,71 @@ class news():
         return self.pos_neg_score['pos'] - self.pos_neg_score['neg']
 # 7. use score to plot
 
-article = news("""Malaysia has begun discussions with six “green” countries that it would like to open its borders to post-Covid-19.
+article = news("""China's capital reported 22 new cases of the Covid-19 coronavirus on Sunday after a mass testing effort that has collected more than two million samples in a race to contain a new outbreak.
 
-Health director-general Datuk Dr Noor Hisham Abdullah said the six countries were Singapore, Brunei, Australia, New Zealand, Japan and South Korea.
+The fresh cluster in Beijing has raised fears of a resurgence of the virus in China, which had largely brought the disease under control over recent months.
 
-However, Dr Noor Hisham said any sort of agreement between Malaysia and those countries must be “mutual and reciprocal”.
+Dozens of communities have been sealed off in the city to contain the spread, with residents told to avoid non-essential travel and schools closed.
 
-“We need to discuss and finalise the SOP (standard operating procedure) between the countries. For example, do we need to quarantine the arrivals? Any SOP must be mutual and reciprocal. We are still in an early stage of discussion (with these countries), ” said Dr Noor Hisham.
+The new infections reported on Sunday include a nurse – the first health worker to test positive since the re-emergence of the illness just over a week ago.
 
-“Both sides need to agree on the conditions. If we can do that, we can allow the business, education and tourism sectors to be opened up (between the countries), ” said Dr Noor Hisham at the ministry’s Covid-19 press conference here on Friday (June 19).
+More than 220 people have tested positive in the new cluster.
 
-Dr Noor Hisham said that Malaysia’s borders have remained closed, although relaxations have been allowed for ambassadors and those under the Malaysia My Second Home programme.
+State news agency Xinhua said local authorities had set up more than 2,000 sites across the city that had obtained 2.3 million samples.
 
-“We allow them to come in, but they also follow our SOP, just like our Malaysian returnees. They must be screened and then quarantined, ” said Dr Noor Hisham.
+The latest outbreak first emerged at a wholesale food market, prompting fears over the safety of the city's food supply.
 
-On whether it is wise to open up to Singapore considering the high number of Covid-19 cases in the country, Dr Noor Hisham said most of the cases involved foreign workers.
+The virus was detected on chopping boards used to handle imported salmon. Beijing officials on Friday advised citizens to dispose of frozen seafood and bean products bought from the site.
 
-“They are just like us, their numbers are high due to cases among their foreign workers. We won’t allow their foreign workers to enter our country, but we probably can allow Singaporeans who have
+The Xinfadi market supplies more than 70 per cent of Beijing's fresh produce and has been closed.
 
-not travelled to other countries recently. This is the kind of discussion we must have with these countries, ” he said.""")
+On Friday, officials said they had launched a nationwide campaign to inspect food imports.
+
+Employees of restaurants, supermarkets, markets and food delivery couriers are being tested for the virus, Xinhua said.
+
+The chief epidemiologist at the Chinese Center for Disease Control and Prevention told reporters on Friday that the new outbreak had been "brought under control" but Beijing would still see new cases.
+
+"People who have not been exposed to the Xinfadi market between May 30 and June 12 are at a very low risk of being infected and do not have to make an appointment for nucleic acid testing," Liu Xiaofeng, deputy director of the Beijing Center for Disease Control, said on Saturday.
+
+The outbreak has also spread to Tongzhou, the administrative hub in Beijing where key government offices are located, health officials said. One case was reported in the area on Sunday.
+
+China recorded 26 new cases nationwide on Sunday, including three domestic infections in Hebei province, which neighbours Beijing. One of the patients worked at the Xinfadi market.
+
+Health officials also confirmed a new imported case. Infections brought in by Chinese nationals returning home had accounted for the majority of recent cases until the Beijing cluster. - AFP""")
 
 article.mani()
 print(article.pos_neg_score())
-print(article.goodfreq, "\n")
-print(article.wordfreq)
-#for key, value in article.goodfreq.items():
-    #print(key, ' : ', value)
-#for key, value in article.stopfreq.items():
-    #print(key, ' : ', value)
+
+#initialise lists
+wrd = []
+freq = []
+#append values to the lists
+for key, value in article.goodfreq.items():
+    wrd.append(key)
+    freq.append(value)
+Good_dict = {'Word':pd.Series(wrd), 'Good Frequency':pd.Series(freq)}
+#create DataFrame from above dictionary
+df = pd.DataFrame(Good_dict)
+print(df,"\n")
+
+#initialise lists
+wrd1 = []
+freq1 = []
+#append values to the lists
+for key, value in article.badfreq.items():
+    wrd1.append(key)
+    freq1.append(value)
+Bad_dict = {'Word':pd.Series(wrd1), 'Bad Frequency':pd.Series(freq1)}
+#create DataFrame from above dictionary
+df2 = pd.DataFrame(Bad_dict)
+print(df2)
+
+ax = df.plot.hist()
+df2.plot.hist(ax=ax)
+
+
+#display DataFrame as bar graph
+#df.plot.bar(x='Word', y='Frequency')
+#bins = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+#plt.hist(df.Word, bins=bins)
+#plt.show
