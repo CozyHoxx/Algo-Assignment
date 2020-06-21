@@ -159,15 +159,17 @@ Health officials also confirmed a new imported case. Infections brought in by Ch
 
 article.mani()
 print(article.pos_neg_score())
-
+print(len(article.wordfreq))
 #initialise lists
 wrd = []
 freq = []
+
 #append values to the lists
 for key, value in article.goodfreq.items():
     wrd.append(key)
     freq.append(value)
 Good_dict = {'Word':pd.Series(wrd), 'Good Frequency':pd.Series(freq)}
+
 #create DataFrame from above dictionary
 df = pd.DataFrame(Good_dict)
 print(df,"\n")
@@ -175,11 +177,13 @@ print(df,"\n")
 #initialise lists
 wrd1 = []
 freq1 = []
+
 #append values to the lists
 for key, value in article.badfreq.items():
     wrd1.append(key)
     freq1.append(value)
 Bad_dict = {'Word':pd.Series(wrd1), 'Bad Frequency':pd.Series(freq1)}
+
 #create DataFrame from above dictionary
 df2 = pd.DataFrame(Bad_dict)
 print(df2)
