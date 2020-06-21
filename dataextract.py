@@ -1,5 +1,4 @@
 import pandas
-# import transport_objects as tr
 import networkx as nx
 from geopy import distance
 from enum import Enum
@@ -134,11 +133,18 @@ def generate_path(start_pos, end_pos):
             G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.AIRPLANE,
                        weight=dist)
 
-    path = nx.algorithms.dijkstra_path(G, start_pos, end_pos, weight='weight')
-    print(path)
-    list_path = list(islice(nx.shortest_simple_paths(G, start_pos, end_pos, weight='weight'), 10))
+    # path = nx.algorithms.dijkstra_path(G, start_pos, end_pos, weight='weight')
+    # print(path)
+    list_path = list(islice(nx.shortest_simple_paths(G, start_pos, end_pos, weight='weight'), 5))
 
-    return list_path
+    # Create a list of subgraph containing the relevant nodes and edges to be displayed on the map.
+    list_subgraph = []
+    for short_path in list_path:
+        pairs = list(zip(short_path, short_path[1:]))
+        print(pairs)
+        list_subgraph.append(G.edge_subgraph(pairs).copy())
+
+    return list_subgraph
 
 
 # generate_bus_route(G)

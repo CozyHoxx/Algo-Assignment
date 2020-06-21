@@ -1,7 +1,7 @@
 import gmplot
 import dataextract as dat
 import itertools
-import transport_objects as tr
+import networkx as nx
 from pyllist import sllist, sllistnode
 import os
 
@@ -45,6 +45,8 @@ def generate_route():
     start_pos = (6.3322, 99.7322)  # FSKTM
     end_pos = (1.5818,	103.654083)  # MRT PB Daman
 
+    colours = itertools.cycle(['#0275d8', '#5cb85c', '#f0ad4e', '#d9534f', '#292b2c'])
+
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
     gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
     gmap.marker(start_pos[0], start_pos[1], 'w', title="START")
@@ -52,11 +54,18 @@ def generate_route():
     # path finding logic may go here
     # We start by connecting the start and end position to any neighbour nodes around it (at LEAST one)
 
-    path = dat.generate_path(start_pos, end_pos)
-    for parth in path:
-        lat, lon = map(list, zip(*parth))
+    route_subgraph = dat.generate_path(start_pos, end_pos)
+    for routes in route_subgraph:
+        print("NEXT ROUTE")
+        print(routes.edges())
+        lat, lon = map(list, zip(*routes.nodes))
+        for u, v, data in routes.edges(data=True):
+            curr_color = next(colours)
+            # gmap.scatter([u[0], v[0]], [u[1], v[1]], 'r', edge_width=5)
+            gmap.plot([u[0], v[0]], [u[1], v[1]], curr_color, edge_width=2)
 
-        gmap.plot(lat, lon, 'w', edge_width=5)
+
+        # gmap.plot(lat, lon, 'w', edge_width=5)
 
     # Draw
     gmap.draw('templates\\map.html')
