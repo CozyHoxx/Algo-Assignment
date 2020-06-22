@@ -28,7 +28,7 @@ class Transport(Enum):
 
 
 def generate_bus_route(graph: nx.Graph):
-    data = pandas.read_excel('Dataset\\MRT Bus Route.xlsx')
+    data = pandas.read_excel('Dataset\\Bus.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
     get_route_from_file(df, Transport.BUS)
 
@@ -98,7 +98,7 @@ def generate_walking_route(lat, lon, curr: G.nodes):
                            weight=dist)
                 G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='walk', type=Transport.WALK,
                            weight=dist)
-        elif dist < 10:
+        elif dist < 5:
             if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
                 G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='taxi', type=Transport.TAXI,
                            weight=dist)
@@ -121,6 +121,8 @@ def generate_path(start_pos, end_pos):
 
     generate_walking_route(start_pos[0], start_pos[1], G.nodes[start_pos])
     generate_walking_route(end_pos[0], end_pos[1], G.nodes[end_pos])
+
+    # Using Yen's k shortest-path algorithm
     list_path = list(islice(nx.shortest_simple_paths(G, start_pos, end_pos, weight='weight'), 5))
 
     # Create a list of subgraphs containing the relevant nodes and edges to be displayed on the map.
@@ -161,3 +163,4 @@ def generate_path(start_pos, end_pos):
 generate_airplane_route(G)
 G = nx.compose(G, H)  # Combine G and H
 generate_train_route(G)
+generate_bus_route(G)

@@ -55,10 +55,7 @@ def generate_route(start_pos, end_pos):
         new_route_gmap = gmplot.GoogleMapPlotter(start_pos[0], start_pos[1], 8)
         new_route_gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
 
-        print("NEXT ROUTE")
-        print(curr_route.edges())
         lat, lon = map(list, zip(*curr_route.nodes))
-        route_string = ""
         curr_color = next(colours)
         for u, v, data in curr_route.edges(data=True):
             stop1 = routes.nodes[u]['stop_name']
