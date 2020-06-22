@@ -52,7 +52,7 @@ def response():
     print(lat, lon)
     # map_creator.generate_route()
     route_list = map_creator.generate_route((3.167026, 101.558437), (lat, lon))
-    print(route_list)
+
     # Ideally, if can la, return a list of routes for me to display thru here.
     route_1 = {'route_1': route_list[0]}
     route_2 = {'route_2': route_list[1]}
