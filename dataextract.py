@@ -31,12 +31,6 @@ def generate_bus_route(graph: nx.Graph):
     get_route_from_file(df, Transport.BUS)
 
 
-def generate_other_bus_route(graph: nx.Graph):
-    data = pandas.read_excel('Dataset\\Other Bus Route.xlsx')
-    df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
-    get_route_from_file(df, Transport.BUS)
-
-
 def generate_train_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\ETS Train.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
@@ -154,9 +148,6 @@ def generate_path(start_pos, end_pos):
 
     return list_subgraph
 
-
-# generate_bus_route(G)
-# generate_other_bus_route(G)
 generate_airplane_route(G)
 G = nx.compose(G, H)  # Combine G and H
 generate_train_route(G)
