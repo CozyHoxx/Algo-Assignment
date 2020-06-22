@@ -179,6 +179,7 @@ generate_train_route(G)
 generate_bus_route(G)
 G = nx.compose(G, I)  # Combine G and I
 
+# Function below is to connect all the bus to all other nodes
 for node in I.nodes(data=True):
     lat = node[0][0]
     lon = node[0][1]
