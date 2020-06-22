@@ -74,36 +74,54 @@
 		<div class="row mb-3">
 			<div class="col-md-8 themed-grid-col">
 				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="map.html" width="auto"></iframe>
+					<iframe class="embed-responsive-item" {% if map_src=='map' %} src="map.html" {% else %}
+							src="route1.html" {% endif %} id="map" width="auto"></iframe>
 				</div>
 			</div>
 			<div class="col-md-4 themed-grid-col">
 				<!-- Nav tabs -->
 				<ul class="nav nav-pills">
 					<li class="nav-item pill-1">
-						<a class="nav-link active" data-toggle="tab" href="#route1">Route 1</a>
+						<a class="nav-link active" data-toggle="tab" href="#route1" onclick="setURL('route1.html')">Route
+							1</a>
 					</li>
 					<li class="nav-item pill-2">
-						<a class="nav-link" data-toggle="tab" href="#route2">Route 2</a>
+						<a class="nav-link" data-toggle="tab" href="#route2" onclick="setURL('route2.html')">Route 2</a>
 					</li>
 					<li class="nav-item pill-3">
-						<a class="nav-link" data-toggle="tab" href="#route3">Route 3</a>
+						<a class="nav-link" data-toggle="tab" href="#route3" onclick="setURL('route3.html')">Route 3</a>
 					</li>
 					<li class="nav-item pill-4">
-						<a class="nav-link" data-toggle="tab" href="#route4">Route 4</a>
+						<a class="nav-link" data-toggle="tab" href="#route4" onclick="setURL('route4.html')">Route 4</a>
 					</li>
 					<li class="nav-item pill-5">
-						<a class="nav-link" data-toggle="tab" href="#route5">Route 5</a>
+						<a class="nav-link" data-toggle="tab" href="#route5" onclick="setURL('route5.html')">Route 5</a>
 					</li>
 				</ul>
 
 				<!-- Tab panes -->
 				<div class="tab-content">
-					<div class="tab-pane container active" id="route1">{{ route_1['route_1'] }}</div>
-					<div class="tab-pane container fade" id="route2">{{ route_2['route_2'] }}</div>
-					<div class="tab-pane container fade" id="route3">{{ route_3['route_3'] }}</div>
-					<div class="tab-pane container fade" id="route4">{{ route_4['route_4'] }}</div>
-					<div class="tab-pane container fade" id="route5">{{ route_5['route_5'] }}</div>
+					<div class="tab-pane container active" id="route1">
+						{% for para in route_1['route_1'] %}
+						<p>{{para}}</p>
+						{% endfor %}
+					</div>
+					<div class="tab-pane container fade" id="route2">{% for para in route_2['route_2'] %}
+						<p>{{para}}</p>
+						{% endfor %}
+					</div>
+					<div class="tab-pane container fade" id="route3">{% for para in route_3['route_3'] %}
+						<p>{{para}}</p>
+						{% endfor %}
+					</div>
+					<div class="tab-pane container fade" id="route4">{% for para in route_4['route_4'] %}
+						<p>{{para}}</p>
+						{% endfor %}
+					</div>
+					<div class="tab-pane container fade" id="route5">{% for para in route_5['route_5'] %}
+						<p>{{para}}</p>
+						{% endfor %}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -119,5 +137,14 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"></script>
+	<script>
+	function setURL(url){
+		if(window.location.href.indexOf("response") > -1){
+			document.getElementById('map').src = url;
+		}
+	}
+
+	</script>
+
 </body>
 </html>

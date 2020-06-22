@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[8]:
+
+
+# !/usr/bin/env python
+# coding: utf-8
+
 # In[69]:
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import collections
+import collections, pickle, requests
+from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
 class Node():
@@ -96,6 +103,7 @@ class news():
         neg = Tree()
         pos_score = 0
         neg_score = 0
+        dic = {}
         for word in self.good:
             pos.addWord(word)
         for word in self.bad:
@@ -118,140 +126,201 @@ class news():
                     self.wordfreq[word] += 1
                 else:
                     self.wordfreq[word] = 1
+        typeOf = input('What is the type of transportation in this article?').lower()
+        try:
+            with open('sentList1', 'rb') as f:
+                dic = pickle.load(f)
+                print('ff')
+        except:
+            pass
+        sum__=pos_score-neg_score
+        if typeOf in dic:
+            dic[typeOf].append(sum__)
+        else:
+            dic[typeOf]=[sum__]
+        with open('sentList1', 'wb') as f:
+            pickle.dump('sentList1', f)
         return {'neg': neg_score, 'pos': pos_score}
+# 7. use score to 
+#_____________________________________________________________________________________________
+#=============================================================================================
+#_____________________________________________________________________________________________
+#=============================================================================================
+#_____________________________________________________________________________________________
+#=============================================================================================
+#_____________________________________________________________________________________________
+#=============================================================================================
+def intoString(url,isPar = False):
+    text = ""
+    if not isPar:
+        req = requests.get(url)
+        url = BeautifulSoup(req.content, 'html.parser')
+        for i in url.find_all():
+            text = text+" "+i.text
+    else:
+        text = url
+    return text
 
-    def sum_score(self):  # 6. get total sum of score
-        return self.pos_neg_score['pos'] - self.pos_neg_score['neg']
-# 7. use score to plot
+def get_senti(filename = 'sentList1'):
+    hold = {}
+    try:
+        with open('sentList1', 'rb') as f:
+            hold = pickle.load(f)
+    except:
+        print("The file is empty!")
+        return 0
+    bus_sc=0
+    try:
+        for i in hold['bus']:
+            bus_sc+=i
+        bus_sc/=len(hold['bus'])
+    except:
+        pass
+    train_sc=0
+    try:
+        for i in hold['train']:
+            train_sc+=i
+        train_sc/=len(hold['train'])
+    except:
+        pass
+    plane_sc=0
+    try:
+        for i in hold['plane']:
+            plane_sc+=i
+        plane_sc/=len(hold['plane'])
+    except:
+        pass
+    return (bus_sc, train_sc, plane_sc)
+#_____________________________________________________________________________________________
+#=============================================================================================
+#_____________________________________________________________________________________________
+#=============================================================================================
+#_____________________________________________________________________________________________
+#=============================================================================================
+#_____________________________________________________________________________________________
+#=============================================================================================
 
-article = news("""China's capital reported 22 new cases of the Covid-19 coronavirus on Sunday after a mass testing effort that has collected more than two million samples in a race to contain a new outbreak.
+def run__(url):
+    isPar = input("Is the string a URL? [Y/N]").upper()
+    if isPar == 'Y':
+        isPar = False
+    else: isPar = True
+    article = news(intoString(url,isPar))
+    article.mani()
+    print(article.pos_neg_score())
+    print(len(article.wordfreq) + len(article.stopfreq))
+    
+    #put total words into a dataframe and display 
 
-The fresh cluster in Beijing has raised fears of a resurgence of the virus in China, which had largely brought the disease under control over recent months.
+    tw = []
+    hz = []
+    for key, value in article.wordfreq.items():
+        tw.append(key)
+        hz.append(value)
+    Word_dict = {'Total Word':pd.Series(tw), 'Total Frequency':pd.Series(hz)}
+    df3 = pd.DataFrame(Word_dict)
 
-Dozens of communities have been sealed off in the city to contain the spread, with residents told to avoid non-essential travel and schools closed.
+    df3 = df3.sort_values('Total Frequency',ascending=False)
+    print(df3.head(n=10),"\n")
+    df3.iloc[0:11].plot.bar(x='Total Word')
 
-The new infections reported on Sunday include a nurse – the first health worker to test positive since the re-emergence of the illness just over a week ago.
+    #put stop words into a dataframe and display 
 
-More than 220 people have tested positive in the new cluster.
+    tw1 = []
+    hz1 = []
+    for key, value in article.stopfreq.items():
+        tw1.append(key)
+        hz1.append(value)
+    Stop_dict = {'Stop Word':pd.Series(tw1), 'Stop Frequency':pd.Series(hz1)}
+    df4 = pd.DataFrame(Stop_dict)
 
-State news agency Xinhua said local authorities had set up more than 2,000 sites across the city that had obtained 2.3 million samples.
+    df4 = df4.sort_values('Stop Frequency',ascending=False)
+    print(df4.head(n=10),"\n")
+    df4.iloc[0:11].plot.bar(x='Stop Word')
 
-The latest outbreak first emerged at a wholesale food market, prompting fears over the safety of the city's food supply.
-
-The virus was detected on chopping boards used to handle imported salmon. Beijing officials on Friday advised citizens to dispose of frozen seafood and bean products bought from the site.
-
-The Xinfadi market supplies more than 70 per cent of Beijing's fresh produce and has been closed.
-
-On Friday, officials said they had launched a nationwide campaign to inspect food imports.
-
-Employees of restaurants, supermarkets, markets and food delivery couriers are being tested for the virus, Xinhua said.
-
-The chief epidemiologist at the Chinese Center for Disease Control and Prevention told reporters on Friday that the new outbreak had been "brought under control" but Beijing would still see new cases.
-
-"People who have not been exposed to the Xinfadi market between May 30 and June 12 are at a very low risk of being infected and do not have to make an appointment for nucleic acid testing," Liu Xiaofeng, deputy director of the Beijing Center for Disease Control, said on Saturday.
-
-The outbreak has also spread to Tongzhou, the administrative hub in Beijing where key government offices are located, health officials said. One case was reported in the area on Sunday.
-
-China recorded 26 new cases nationwide on Sunday, including three domestic infections in Hebei province, which neighbours Beijing. One of the patients worked at the Xinfadi market.
-
-Health officials also confirmed a new imported case. Infections brought in by Chinese nationals returning home had accounted for the majority of recent cases until the Beijing cluster. - AFP""")
-
-article.mani()
-print(article.pos_neg_score())
-print(len(article.wordfreq) + len(article.stopfreq))
-
-
-
-#put total words into a dataframe and display 
-
-tw = []
-hz = []
-for key, value in article.wordfreq.items():
-    tw.append(key)
-    hz.append(value)
-Word_dict = {'Total Word':pd.Series(tw), 'Total Frequency':pd.Series(hz)}
-df3 = pd.DataFrame(Word_dict)
-
-df3 = df3.sort_values('Total Frequency',ascending=False)
-print(df3.head(n=10),"\n")
-df3.iloc[0:11].plot.bar(x='Total Word')
-
-#put stop words into a dataframe and display 
-
-tw1 = []
-hz1 = []
-for key, value in article.stopfreq.items():
-    tw1.append(key)
-    hz1.append(value)
-Stop_dict = {'Stop Word':pd.Series(tw1), 'Stop Frequency':pd.Series(hz1)}
-df4 = pd.DataFrame(Stop_dict)
-
-df4 = df4.sort_values('Stop Frequency',ascending=False)
-print(df4.head(n=10),"\n")
-df4.iloc[0:11].plot.bar(x='Stop Word')
-
-ax = df3.plot.hist()
-ax = df4.plot.hist(ax=ax)
-ax.set_title('Meta Frequency of Total & Stop Words Histogram')
-ax.set_xlabel('Word frequency')
-ax.set_ylabel('Frequency of Frequency')
-fig = ax.get_figure()
-fig.savefig('Total&StopHist.png')
-
-
-
-#initialise lists
-wrd = []
-freq = []
-#append values to the lists
-for key, value in article.goodfreq.items():
-    wrd.append(key)
-    freq.append(value)
-Good_dict = {'Word':pd.Series(wrd), 'Good Frequency':pd.Series(freq)}
-
-#create DataFrame from above dictionary
-df = pd.DataFrame(Good_dict)
-#print(df,"\n")
-ax = df.plot.bar(x = 'Word')
-ax.set_title('Frequency of Positive Words')
-ax.set_xlabel('Positive Words')
-ax.set_ylabel('Frequency')
-fig = ax.get_figure()
-fig.savefig('PosBar.png')
-
-
-#initialise lists
-wrd1 = []
-freq1 = []
-#append values to the lists
-for key, value in article.badfreq.items():
-    wrd1.append(key)
-    freq1.append(value)
-Bad_dict = {'Word':pd.Series(wrd1), 'Bad Frequency':pd.Series(freq1)}
-
-#create DataFrame from above dictionary
-df2 = pd.DataFrame(Bad_dict)
-#print(df2)
-ax = df2.plot.bar(x = 'Word')
-ax.set_title('Frequency of negative words')
-ax.set_xlabel('Negative Words')
-ax.set_ylabel('Frequency of Words')
-fig = ax.get_figure()
-fig.savefig('NegBar.png')
+    ax = df3.plot.hist()
+    ax = df4.plot.hist(ax=ax)
+    ax.set_title('Meta Frequency of Total & Stop Words Histogram')
+    ax.set_xlabel('Word frequency')
+    ax.set_ylabel('Frequency of Frequency')
+    fig = ax.get_figure()
+    fig.savefig('Total&StopHist.png')
 
 
-#Generate Histogram for Positive & Negative words
-ax = df.plot.hist()
-ax = df2.plot.hist(ax=ax)
-ax.set_title('Meta Frequency of Positive and Negative Words Histogram')
-ax.set_xlabel('Word frequency')
-ax.set_ylabel('Frequency of Frequency')
-fig = ax.get_figure()
-fig.savefig('PosNegHist.png')
+
+    #initialise lists
+    wrd = []
+    freq = []
+    #append values to the lists
+    for key, value in article.goodfreq.items():
+        wrd.append(key)
+        freq.append(value)
+    Good_dict = {'Word':pd.Series(wrd), 'Good Frequency':pd.Series(freq)}
+
+    #create DataFrame from above dictionary
+    df = pd.DataFrame(Good_dict)
+    #print(df,"\n")
+    ax = df.plot.bar(x = 'Word')
+    ax.set_title('Frequency of Positive Words')
+    ax.set_xlabel('Positive Words')
+    ax.set_ylabel('Frequency')
+    fig = ax.get_figure()
+    fig.savefig('PosBar.png')
 
 
-#display DataFrame as bar graph
-#df.plot.bar(x='Word', y='Frequency')
-#bins = [0,1,2,3,4,5,6,7,8,9,10,11,12]
-#plt.hist(df.Word, bins=bins)
-#plt.show
+    #initialise lists
+    wrd1 = []
+    freq1 = []
+    #append values to the lists
+    for key, value in article.badfreq.items():
+        wrd1.append(key)
+        freq1.append(value)
+    Bad_dict = {'Word':pd.Series(wrd1), 'Bad Frequency':pd.Series(freq1)}
+
+    #create DataFrame from above dictionary
+    df2 = pd.DataFrame(Bad_dict)
+    #print(df2)
+    ax = df2.plot.bar(x = 'Word')
+    ax.set_title('Frequency of negative words')
+    ax.set_xlabel('Negative Words')
+    ax.set_ylabel('Frequency of Words')
+    fig = ax.get_figure()
+    fig.savefig('NegBar.png')
+
+
+    #Generate Histogram for Positive & Negative words
+    ax = df.plot.hist()
+    ax = df2.plot.hist(ax=ax)
+    ax.set_title('Meta Frequency of Positive and Negative Words Histogram')
+    ax.set_xlabel('Word frequency')
+    ax.set_ylabel('Frequency of Frequency')
+    fig = ax.get_figure()
+    fig.savefig('PosNegHist.png')
+
+
+    #display DataFrame as bar graph
+    #df.plot.bar(x='Word', y='Frequency')
+    #bins = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+    #plt.hist(df.Word, bins=bins)
+    #plt.show
+
+
+    
+    
+    
+    
+    ################################################################################################
+    ################################################################################################
+    ################################################################################################
+    
+    
+    #how to use _____________________
+    
+    #run(URL) or run(Paragraph)
+
+
+# In[ ]:
+
+
+
+

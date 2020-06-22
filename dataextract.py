@@ -13,7 +13,9 @@ import matplotlib.pyplot as plt
 # G is weighted directed graph
 G = nx.DiGraph()
 H = nx.DiGraph()
-#this comment is to test github
+
+
+# this comment is to test github
 
 
 class Transport(Enum):
@@ -43,10 +45,10 @@ def generate_train_route(graph: nx.Graph):
 def generate_airplane_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\Airports.xlsx')
     df = pandas.DataFrame(data, columns=['Airport', 'Latitud', 'Longitud', 'Route Name'])
-    get_airport_route_from_file(df, Transport.AIRPLANE)
+    get_airport_route_from_file(df)
 
 
-def get_airport_route_from_file(df: pandas.DataFrame, type):
+def get_airport_route_from_file(df: pandas.DataFrame):
     # Add every airport to the Graph H
     for i in df.index:
         lat = df['Latitud'][i]
@@ -60,7 +62,7 @@ def get_airport_route_from_file(df: pandas.DataFrame, type):
                            weight=distance.distance(node[0], other_node[0]).kilometers)
 
 
-def get_route_from_file(df: pandas.DataFrame, type):
+def get_route_from_file(df: pandas.DataFrame, transport_type):
     current_route = ""
     stop = -1
     prev_lat = 0.0
@@ -77,18 +79,16 @@ def get_route_from_file(df: pandas.DataFrame, type):
         else:
             # We keep adding new stops to the current route.
             G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
-            G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=type,
+            G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=transport_type,
                        weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
-            if type == Transport.TRAIN:
-                G.add_edge((lat, lon), (prev_lat, prev_lon), route_name=current_route, type=type,
+            if transport_type == Transport.TRAIN:
+                G.add_edge((lat, lon), (prev_lat, prev_lon), route_name=current_route, type=transport_type,
                            weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
         generate_walking_route(lat, lon, G.nodes[(lat, lon)])
         prev_lat = lat
         prev_lon = lon
 
 
-# To add bus stop that are close to their bus station
-# ie; Phileo Damansara Bus Stop + Phileo Damansara Train Station
 def generate_walking_route(lat, lon, curr: G.nodes):
     for neigh, neigh_data in G.nodes(data=True):
         dist = distance.distance((lat, lon), (neigh[0], neigh[1])).kilometers
@@ -112,51 +112,52 @@ def get_graph():
 
 def generate_path(start_pos, end_pos):
     print("Connecting start and end......")
-    isStartStation = False
-    isEndStation = False
-    if not G.has_node(start_pos):
-        G.add_node(start_pos, stop_name='Start point')
-        isStartStation = True
-    if not G.has_node(end_pos):
-        G.add_node(end_pos, stop_name='End point')
-        isEndStation = True
+
+    G.add_node(start_pos, stop_name='Start point', route_name='none')
+
+    G.add_node(end_pos, stop_name='End point', route_name='none')
 
     # Connect node to nearby neighbours
 
-    for p, d in G.nodes(data=True):
-        dist = distance.distance(start_pos, (p[0], p[1])).kilometers
-        if dist < 0.3:
-            G.add_edge(start_pos, (p[0], p[1]), route_name='walk', type=Transport.WALK,
-                       weight=dist)
-
-    for p, d in G.nodes(data=True):
-        dist = distance.distance(end_pos, (p[0], p[1])).kilometers
-        if dist < 0.3:
-            G.add_edge(end_pos, (p[0], p[1]), route_name='walk', type=Transport.WALK,
-                       weight=dist)
-
-    # path = nx.algorithms.dijkstra_path(G, start_pos, end_pos, weight='weight')
-    # print(path)
+    generate_walking_route(start_pos[0], start_pos[1], G.nodes[start_pos])
+    generate_walking_route(end_pos[0], end_pos[1], G.nodes[end_pos])
     list_path = list(islice(nx.shortest_simple_paths(G, start_pos, end_pos, weight='weight'), 5))
 
-    # Create a list of subgraph containing the relevant nodes and edges to be displayed on the map.
+    # Create a list of subgraphs containing the relevant nodes and edges to be displayed on the map.
     list_subgraph = []
+    route_list = []
     for short_path in list_path:
         pairs = list(zip(short_path, short_path[1:]))
-        print(pairs)
+        # print(pairs)
         list_subgraph.append(G.edge_subgraph(pairs).copy())
+        route_string = []
+        total_dist = 0.0
+        for u, v in pairs:
+            stop1 = G.nodes[u]['stop_name']
+            stop2 = G.nodes[v]['stop_name']
+            transport_type = G[u][v]['type']
+            str_transport = " "
+            if transport_type == Transport.WALK:
+                str_transport = "walking"
+            elif transport_type == Transport.BUS:
+                str_transport = "bus"
+            elif transport_type == Transport.TRAIN:
+                str_transport = "train"
+            elif transport_type == Transport.AIRPLANE:
+                str_transport = "airplane"
+            elif transport_type == Transport.TAXI:
+                str_transport = "taxi"
+            dist = round(G[u][v]['weight'], 2)
+            total_dist += G[u][v]['weight']
+            route_string.append(
+                stop1 + " to " + stop2 + " by " + str(str_transport) + ". (" + str(dist) + " km)")
+        total_dist = round(total_dist, 2)
+        route_string.append("Total distance = " + str(total_dist) + " km")
+        route_list.append(route_string)
 
-    return list_subgraph
+    return list_subgraph, route_list
+
 
 generate_airplane_route(G)
 G = nx.compose(G, H)  # Combine G and H
 generate_train_route(G)
-
-print(G.order())
-# nx.draw(H) # Airport
-# nx.draw(G) # Train + Bus route
-# nx.draw(F)
-# plt.show()
-
-# print(G.nodes)
-# print(G.edges)
