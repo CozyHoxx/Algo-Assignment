@@ -33,12 +33,17 @@ def generate_map():
         elif data['type'] == Transport.AIRPLANE:
             color = 'k'
         elif data['type'] == Transport.TAXI:
-            color = 'g'
+            color = 'y'
         else:
             color = 'b'
-        gmap.scatter([u[0], v[0]], [u[1], v[1]], color, edge_width=5)
-        gmap.plot([u[0], v[0]], [u[1], v[1]], color, edge_width=2)
+        # gmap.scatter([u[0], v[0]], [u[1], v[1]], color, edge_width=5)
+        gmap.polygon([u[0], v[0]], [u[1], v[1]], color, edge_width=2)
 
+    # BOILER PLATE CODE TO DISPLAY DESTINATION POINTS TEMPORARILY
+    # Just wanna see the destination markers.
+    lat2, lon2 = map(list, zip((5.41123, 100.33543), (4.50327, 101.3981), (4.849050, 100.739113), (6.4414, 100.19862),
+                               (6.32649, 99.8432)))
+    gmap.scatter(lat2, lon2, 'w', edge_width=5)
     # Draw
     gmap.draw('templates\\map.html')
 
@@ -46,9 +51,9 @@ def generate_map():
 def generate_route():
     # start_pos [lat,lon] and end_pos [lat,lon]
     start_pos = (6.3322, 99.7322)  # FSKTM
-    end_pos = (1.5818,	103.654083)  # MRT PB Daman
+    end_pos = (1.5818, 103.654083)  # MRT PB Daman
     colours = itertools.cycle(['#0275d8', '#5cb85c', '#f0ad4e', '#d9534f', '#292b2c'])
-
+    gmap = gmplot.GoogleMapPlotter(3.147447, 101.655015, 7)
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
     gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
     gmap.marker(start_pos[0], start_pos[1], 'w', title="START")
@@ -78,8 +83,10 @@ def generate_route():
                 transport_type = "airplane"
             print(stop1 + " to " + stop2 + " by " + str(transport_type))
             route_string += stop1 + " to " + stop2 + " by " + str(transport_type)
+            gmap.marker(u[0], u[1], 'w', title=stop1)
+            gmap.marker(v[0], v[1], 'w', title=stop2)
             # gmap.scatter([u[0], v[0]], [u[1], v[1]], 'r', edge_width=5)
-            gmap.plot([u[0], v[0]], [u[1], v[1]], curr_color, edge_width=2)
+            gmap.polygon([u[0], v[0]], [u[1], v[1]], curr_color, edge_width=2)
         route_list.append(route_string)
 
         # gmap.plot(lat, lon, 'w', edge_width=5)
@@ -89,5 +96,5 @@ def generate_route():
     return route_list
 
 
-generate_map()
-generate_route()
+# generate_map()
+# generate_route()
