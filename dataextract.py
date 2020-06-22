@@ -30,7 +30,7 @@ class Transport(Enum):
 def generate_bus_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\Bus.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
-
+    #get_route_from_file(df, Transport.BUS)
     for i in df.index:
         lat = df['Latitud'][i]
         lon = df['Longitud'][i]
@@ -41,6 +41,10 @@ def generate_bus_route(graph: nx.Graph):
             if node != other_node:
                 I.add_edge(node[0], other_node[0], route_name='Bus', type=Transport.BUS,
                            weight=distance.distance(node[0], other_node[0]).kilometers)
+
+
+
+
 
 
 def generate_train_route(graph: nx.Graph):
@@ -174,4 +178,13 @@ G = nx.compose(G, H)  # Combine G and H
 generate_train_route(G)
 generate_bus_route(G)
 G = nx.compose(G, I)  # Combine G and I
+
+for node in I.nodes(data=True):
+    lat = node[0][0]
+    lon = node[0][1]
+    generate_walking_route(lat, lon, G.nodes[(lat, lon)])
+
+
+
+
 
