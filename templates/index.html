@@ -99,11 +99,23 @@
 
 				<!-- Tab panes -->
 				<div class="tab-content">
-					<div class="tab-pane container active" id="route1">{{ route_1['route_1'] }}</div>
-					<div class="tab-pane container fade" id="route2">{{ route_2['route_2'] }}</div>
-					<div class="tab-pane container fade" id="route3">{{ route_3['route_3'] }}</div>
-					<div class="tab-pane container fade" id="route4">{{ route_4['route_4'] }}</div>
-					<div class="tab-pane container fade" id="route5">{{ route_5['route_5'] }}</div>
+					<div class="tab-pane container active" id="route1">
+						{% for para in route_1['route_1'] %}
+						<p>{{para}}</p>
+						{% endfor %}
+					</div>
+					<div class="tab-pane container fade" id="route2">{% for para in route_2['route_2'] %}
+						<p>{{para}}</p>
+						{% endfor %}</div>
+					<div class="tab-pane container fade" id="route3">{% for para in route_3['route_3'] %}
+						<p>{{para}}</p>
+						{% endfor %}</div>
+					<div class="tab-pane container fade" id="route4">{% for para in route_4['route_4'] %}
+						<p>{{para}}</p>
+						{% endfor %}</div>
+					<div class="tab-pane container fade" id="route5">{% for para in route_5['route_5'] %}
+						<p>{{para}}</p>
+						{% endfor %}</div>
 				</div>
 			</div>
 		</div>

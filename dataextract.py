@@ -152,12 +152,29 @@ def generate_path(start_pos, end_pos):
 
     # Create a list of subgraphs containing the relevant nodes and edges to be displayed on the map.
     list_subgraph = []
+    route_list = []
     for short_path in list_path:
         pairs = list(zip(short_path, short_path[1:]))
-        print(pairs)
+        # print(pairs)
         list_subgraph.append(G.edge_subgraph(pairs).copy())
+        route_string = []
+        for u, v in pairs:
+            stop1 = G.nodes[u]['stop_name']
+            stop2 = G.nodes[v]['stop_name']
+            transport_type = G[u][v]['type']
+            str_transport = " "
+            if transport_type == Transport.WALK:
+                str_transport = "walking"
+            elif transport_type == Transport.BUS:
+                str_transport = "bus"
+            elif transport_type == Transport.TRAIN:
+                str_transport = "train"
+            elif transport_type == Transport.AIRPLANE:
+                str_transport = "airplane"
+            route_string.append(stop1 + " to " + stop2 + " by " + str(str_transport)+ ".")
+        route_list.append(route_string)
 
-    return list_subgraph
+    return list_subgraph, route_list
 
 
 generate_airplane_route(G)
