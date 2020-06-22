@@ -68,8 +68,8 @@ def generate_route():
         print(curr_route.edges())
         lat, lon = map(list, zip(*curr_route.nodes))
         route_string = ""
+        curr_color = next(colours)
         for u, v, data in curr_route.edges(data=True):
-            curr_color = next(colours)
             stop1 = routes.nodes[u]['stop_name']
             stop2 = routes.nodes[v]['stop_name']
             new_route_gmap.marker(u[0], u[1], 'w', title=stop1)
