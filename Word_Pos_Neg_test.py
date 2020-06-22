@@ -139,7 +139,7 @@ class news():
         else:
             dic[typeOf]=[sum__]
         with open('sentList1', 'wb') as f:
-            pickle.dump('sentList1', f)
+            pickle.dump(dic, f)
         return {'neg': neg_score, 'pos': pos_score}
 # 7. use score to 
 #_____________________________________________________________________________________________
