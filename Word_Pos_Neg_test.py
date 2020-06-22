@@ -155,7 +155,7 @@ def intoString(url,isPar = False):
     if not isPar:
         req = requests.get(url)
         url = BeautifulSoup(req.content, 'html.parser')
-        for i in url.find_all():
+        for i in url.find_all('p'):
             text = text+" "+i.text
     else:
         text = url
