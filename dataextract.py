@@ -16,7 +16,13 @@ G = nx.DiGraph()
 H = nx.DiGraph()
 I = nx.DiGraph()
 sentiment = Word_Pos_Neg_test.get_senti()
-
+total_sentiment = sentiment[0] + sentiment[1] + sentiment[2]
+bus_sc = sentiment[0]/total_sentiment
+train_sc = sentiment[1]/total_sentiment
+plane_sc = sentiment[2]/total_sentiment
+# bus_sc = 0
+# train_sc = 0
+# plane_sc = 0
 # this comment is to test github
 
 
@@ -32,7 +38,7 @@ class Transport(Enum):
 def generate_bus_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\Bus.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
-    #get_route_from_file(df, Transport.BUS)
+    # get_route_from_file(df, Transport.BUS)
     for i in df.index:
         lat = df['Latitud'][i]
         lon = df['Longitud'][i]
@@ -41,12 +47,9 @@ def generate_bus_route(graph: nx.Graph):
     for node in I.nodes(data=True):
         for other_node in I.nodes(data=True):
             if node != other_node:
+                dist = distance.distance(node[0], other_node[0]).kilometers
                 I.add_edge(node[0], other_node[0], route_name='Bus', type=Transport.BUS,
-                           weight=distance.distance(node[0], other_node[0]).kilometers)
-
-
-
-
+                           weight=dist - (dist*bus_sc), dist=dist)
 
 
 def generate_train_route(graph: nx.Graph):
@@ -74,8 +77,9 @@ def get_airport_route_from_file(df: pandas.DataFrame):
     for node in H.nodes(data=True):
         for other_node in H.nodes(data=True):
             if node != other_node:
+                dist = distance.distance(node[0], other_node[0]).kilometers
                 H.add_edge(node[0], other_node[0], route_name='airplane', type=Transport.AIRPLANE,
-                           weight=distance.distance(node[0], other_node[0]).kilometers)
+                           weight=dist - (dist*plane_sc), dist=dist)
 
 
 def get_route_from_file(df: pandas.DataFrame, transport_type):
@@ -95,11 +99,12 @@ def get_route_from_file(df: pandas.DataFrame, transport_type):
         else:
             # We keep adding new stops to the current route.
             G.add_node((lat, lon), stop_name=stop_name, route_name=current_route)
+            dist = distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers
             G.add_edge((prev_lat, prev_lon), (lat, lon), route_name=current_route, type=transport_type,
-                       weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
+                       weight=dist - (dist*train_sc), dist=dist)
             if transport_type == Transport.TRAIN:
                 G.add_edge((lat, lon), (prev_lat, prev_lon), route_name=current_route, type=transport_type,
-                           weight=distance.distance((lat, lon), (prev_lat, prev_lon)).kilometers)
+                           weight=dist - (dist*train_sc), dist=dist)
         generate_walking_route(lat, lon, G.nodes[(lat, lon)])
         prev_lat = lat
         prev_lon = lon
@@ -111,15 +116,15 @@ def generate_walking_route(lat, lon, curr: G.nodes):
         if dist < 1:
             if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
                 G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='walk', type=Transport.WALK,
-                           weight=dist)
+                           weight=dist, dist=dist)
                 G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='walk', type=Transport.WALK,
-                           weight=dist)
+                           weight=dist, dist=dist)
         elif dist < 10:
             if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
                 G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='taxi', type=Transport.TAXI,
-                           weight=dist)
+                           weight=dist, dist=dist)
                 G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='taxi', type=Transport.TAXI,
-                           weight=dist)
+                           weight=dist, dist=dist)
 
     # last hope for end points not connecting
     if (curr['stop_name'] == 'Start point' or curr['stop_name'] == 'End point') and G[
@@ -129,9 +134,9 @@ def generate_walking_route(lat, lon, curr: G.nodes):
             if dist < 20:
                 if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
                     G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='taxi', type=Transport.TAXI,
-                               weight=dist)
+                               weight=dist, dist=dist)
                     G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='taxi', type=Transport.TAXI,
-                               weight=dist)
+                               weight=dist, dist=dist)
 
 
 def get_graph():
@@ -161,6 +166,7 @@ def generate_path(start_pos, end_pos):
         list_subgraph.append(G.edge_subgraph(pairs).copy())
         route_string = []
         total_dist = 0.0
+        total_weight = 0.0
         for u, v in pairs:
             stop1 = G.nodes[u]['stop_name']
             stop2 = G.nodes[v]['stop_name']
@@ -176,12 +182,17 @@ def generate_path(start_pos, end_pos):
                 str_transport = "airplane"
             elif transport_type == Transport.TAXI:
                 str_transport = "taxi"
-            dist = round(G[u][v]['weight'], 2)
-            total_dist += G[u][v]['weight']
+            dist = round(G[u][v]['dist'], 2)
+            weight = round(G[u][v]['weight'], 2)
+            total_dist += G[u][v]['dist']
+            total_weight += G[u][v]['weight']
             route_string.append(
-                stop1 + " to " + stop2 + " by " + str(str_transport) + ". (" + str(dist) + " km)")
+                stop1 + " to " + stop2 + " by " + str(str_transport) + ". (" + str(dist) + " km)" + "(Weight = " + str(
+                    weight) + ")")
         total_dist = round(total_dist, 2)
         route_string.append("Total distance = " + str(total_dist) + " km")
+        total_weight = round(total_weight, 2)
+        route_string.append("Total weight = " + str(total_weight))
         route_list.append(route_string)
 
     return list_subgraph, route_list
@@ -198,8 +209,3 @@ for node in I.nodes(data=True):
     lat = node[0][0]
     lon = node[0][1]
     generate_walking_route(lat, lon, G.nodes[(lat, lon)])
-
-
-
-
-
