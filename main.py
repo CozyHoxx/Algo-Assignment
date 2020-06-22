@@ -22,7 +22,7 @@ def hello_world():
     route_3 = {'route_3': 'Route 3 here!'}
     route_4 = {'route_4': 'Route 4 here!'}
     route_5 = {'route_5': 'Route 5 here!'}
-    map_creator.generate_map()
+    map_creator.generate_basic_map()
     # map_creator.generate_route([3.167026, 101.558437], [0, 0])
     return render_template('index.html', route_1=route_1, route_2=route_2, route_3=route_3, route_4=route_4,
                            route_5=route_5)
@@ -65,6 +65,7 @@ def response():
 
 @app.route('/full_map')
 def show_full_map():
+    map_creator.generate_full_map()
     return render_template('full_map_page.html')
 
 
@@ -76,6 +77,11 @@ def show_word_graph():
 @app.route('/map.html')
 def show_map():
     return send_file('templates\\map.html')
+
+
+@app.route('/full_map.html')
+def show_the_real_map():
+    return send_file('templates\\full_map.html')
 
 
 # Runs the web server

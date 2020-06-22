@@ -9,11 +9,16 @@ import os
 # bus_route_list = dat.generate_bus_route()
 # train_route_list = dat.generate_train_route()
 routes = dat.get_graph()
-gmap = gmplot.GoogleMapPlotter(3.147447, 101.655015, 7)
 
 
-def generate_map():
+def generate_basic_map():
+    gmap = gmplot.GoogleMapPlotter(3.147447, 101.655015, 7)
+    gmap.draw('templates\\map.html')
+
+
+def generate_full_map():
     # PATCH FOR RENDERING MARKERS! DO NOT TOUCH.
+    gmap = gmplot.GoogleMapPlotter(3.147447, 101.655015, 7)
     gmap.coloricon = "http://www.googlemapsmarkers.com/v1/%s/"
 
     colours = itertools.cycle(['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'])
@@ -45,7 +50,7 @@ def generate_map():
                                (6.32649, 99.8432)))
     gmap.scatter(lat2, lon2, 'w', edge_width=5)
     # Draw
-    gmap.draw('templates\\map.html')
+    gmap.draw('templates\\full_map.html')
 
 
 def generate_route():
@@ -60,7 +65,6 @@ def generate_route():
     new_route_gmap.marker(start_pos[0], start_pos[1], 'w', title="START")
     new_route_gmap.marker(end_pos[0], end_pos[1], 'w', title="END")
 
-
     route_subgraph, route_list = dat.generate_path(start_pos, end_pos)
 
     for curr_route in route_subgraph:
@@ -74,11 +78,7 @@ def generate_route():
             stop2 = routes.nodes[v]['stop_name']
             new_route_gmap.marker(u[0], u[1], 'w', title=stop1)
             new_route_gmap.marker(v[0], v[1], 'w', title=stop2)
-            # gmap.scatter([u[0], v[0]], [u[1], v[1]], 'r', edge_width=5)
             new_route_gmap.polygon([u[0], v[0]], [u[1], v[1]], curr_color, edge_width=2)
-
-
-        # gmap.plot(lat, lon, 'w', edge_width=5)
 
     # Draw
     new_route_gmap.draw('templates\\map.html')
