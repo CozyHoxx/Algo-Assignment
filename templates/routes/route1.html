@@ -6,34 +6,16 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false"></script>
 <script type="text/javascript">
 	function initialize() {
-		var centerlatlng = new google.maps.LatLng(3.147447, 101.655015);
+		var centerlatlng = new google.maps.LatLng(3.167026, 101.558437);
 		var myOptions = {
-			zoom: 7,
+			zoom: 8,
 			center: centerlatlng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-		var latlng = new google.maps.LatLng(3.167026, 101.558437);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
-		var marker = new google.maps.Marker({
-		title: "START",
-		icon: img,
-		position: latlng
-		});
-		marker.setMap(map);
-
-		var latlng = new google.maps.LatLng(5.411230, 100.335430);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
-		var marker = new google.maps.Marker({
-		title: "END",
-		icon: img,
-		position: latlng
-		});
-		marker.setMap(map);
-
 		var latlng = new google.maps.LatLng(3.149020, 101.539452);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
 		title: "Lapangan terbang Subang",
 		icon: img,
@@ -42,7 +24,7 @@
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.570010, 101.098412);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
 		title: "Lapangan Terbang Ipoh",
 		icon: img,
@@ -51,34 +33,34 @@
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.776524, 100.932601);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "KUALA KANGSAR",
+		title: "Stesen Keretapi Kuala Kangsar",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.777932, 100.857424);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "PADANG RENGAS",
+		title: "Stesen KTM Padang Rengas",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.393343, 100.366201);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "BUTTERWORTH",
+		title: "Stesen Keretapi Butterworth",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.411230, 100.335430);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FF0000/');
 		var marker = new google.maps.Marker({
 		title: "End point",
 		icon: img,
@@ -87,25 +69,25 @@
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.365998, 100.447993);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "BUKIT MERTAJAM",
+		title: "Stesen KTM Bukit Mertajam",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.393343, 100.366201);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "BUTTERWORTH",
+		title: "Stesen Keretapi Butterworth",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(3.167026, 101.558437);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FF0000/');
 		var marker = new google.maps.Marker({
 		title: "Start point",
 		icon: img,
@@ -114,7 +96,7 @@
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(3.149020, 101.539452);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
 		title: "Lapangan terbang Subang",
 		icon: img,
@@ -123,97 +105,97 @@
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.777932, 100.857424);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "PADANG RENGAS",
+		title: "Stesen KTM Padang Rengas",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.852059, 100.731489);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "TAIPING",
+		title: "Taiping Railway",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.852059, 100.731489);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "TAIPING",
+		title: "Taiping Railway",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.028068, 100.527197);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "BAGAN SERAI",
+		title: "Stesen Bagan Serai",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.597526, 101.073330);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "SUNGKAI",
+		title: "Stesen Keretapi Sungkai",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.818757, 101.071261);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "SUNGAI SIPUT",
+		title: "Stesen Keretapi Sungai Siput",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.130571, 100.486575);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "PARIT BUNTAR",
+		title: "Stesen Keretapi Kampung Permatang Tok Mamat",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.365998, 100.447993);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "BUKIT MERTAJAM",
+		title: "Stesen KTM Bukit Mertajam",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.028068, 100.527197);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "BAGAN SERAI",
+		title: "Stesen Bagan Serai",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(5.130571, 100.486575);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "PARIT BUNTAR",
+		title: "Stesen Keretapi Kampung Permatang Tok Mamat",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.570010, 101.098412);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
 		title: "Lapangan Terbang Ipoh",
 		icon: img,
@@ -222,27 +204,27 @@
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.597526, 101.073330);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "SUNGKAI",
+		title: "Stesen Keretapi Sungkai",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.818757, 101.071261);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "SUNGAI SIPUT",
+		title: "Stesen Keretapi Sungai Siput",
 		icon: img,
 		position: latlng
 		});
 		marker.setMap(map);
 
 		var latlng = new google.maps.LatLng(4.776524, 100.932601);
-		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/FFFFFF/');
+		var img = new google.maps.MarkerImage('http://www.googlemapsmarkers.com/v1/0275d8/');
 		var marker = new google.maps.Marker({
-		title: "KUALA KANGSAR",
+		title: "Stesen Keretapi Kuala Kangsar",
 		icon: img,
 		position: latlng
 		});
