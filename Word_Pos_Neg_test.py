@@ -315,8 +315,8 @@ def run__(url):
     #how to use _____________________
     
     #run(URL) or run(Paragraph)
-run__("https://www.malaymail.com/news/malaysia/2020/05/07/pdrm-motorcycle-and-express-buses-are-now-allowed-for-interstate-travel/1864062")
-print(get_senti())
+# run__("https://www.malaymail.com/news/malaysia/2020/05/07/pdrm-motorcycle-and-express-buses-are-now-allowed-for-interstate-travel/1864062")
+# print(get_senti())
 
 # In[ ]:
 

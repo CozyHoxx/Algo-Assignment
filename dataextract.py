@@ -3,6 +3,7 @@ import networkx as nx
 from geopy import distance
 from enum import Enum
 from itertools import islice
+import Word_Pos_Neg_test
 import matplotlib.pyplot as plt
 
 # Prototype data parser
@@ -14,6 +15,7 @@ import matplotlib.pyplot as plt
 G = nx.DiGraph()
 H = nx.DiGraph()
 I = nx.DiGraph()
+sentiment = Word_Pos_Neg_test.get_senti()
 
 # this comment is to test github
 
@@ -112,12 +114,24 @@ def generate_walking_route(lat, lon, curr: G.nodes):
                            weight=dist)
                 G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='walk', type=Transport.WALK,
                            weight=dist)
-        elif dist < 5:
+        elif dist < 10:
             if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
                 G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='taxi', type=Transport.TAXI,
                            weight=dist)
                 G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='taxi', type=Transport.TAXI,
                            weight=dist)
+
+    # last hope for end points not connecting
+    if (curr['stop_name'] == 'Start point' or curr['stop_name'] == 'End point') and G[
+        (lat, lon)].__len__() <= 0:
+        for neigh, neigh_data in G.nodes(data=True):
+            dist = distance.distance((lat, lon), (neigh[0], neigh[1])).kilometers
+            if dist < 20:
+                if (curr['route_name'] != neigh_data['route_name']) & (not G.has_edge((lat, lon), neigh)):
+                    G.add_edge((lat, lon), (neigh[0], neigh[1]), route_name='taxi', type=Transport.TAXI,
+                               weight=dist)
+                    G.add_edge((neigh[0], neigh[1]), (lat, lon), route_name='taxi', type=Transport.TAXI,
+                               weight=dist)
 
 
 def get_graph():

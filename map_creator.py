@@ -43,6 +43,10 @@ def generate_full_map():
             color = 'b'
         gmap.polygon([u[0], v[0]], [u[1], v[1]], color, edge_width=2)
     # Draw
+
+    lat2, lon2 = map(list, zip((5.41123, 100.33543), (4.50327, 101.3981), (4.849050, 100.739113), (6.4414, 100.19862),
+                               (6.32649, 99.8432)))
+    gmap.scatter(lat2, lon2, 'w', edge_width=5)
     gmap.draw('templates\\full_map.html')
 
 
