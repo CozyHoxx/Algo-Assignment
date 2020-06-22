@@ -9,10 +9,8 @@
 
 # In[69]:
 
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import collections, pickle, requests
+import pickle, requests
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
@@ -222,7 +220,7 @@ def run__(url):
 
     df3 = df3.sort_values('Total Frequency',ascending=False)
     print(df3.head(n=10),"\n")
-    df3.iloc[0:11].plot.bar(x='Total Word')
+    df3.iloc[0:10].plot.bar(x='Total Word')
 
     #put stop words into a dataframe and display 
 
@@ -236,7 +234,7 @@ def run__(url):
 
     df4 = df4.sort_values('Stop Frequency',ascending=False)
     print(df4.head(n=10),"\n")
-    df4.iloc[0:11].plot.bar(x='Stop Word')
+    df4.iloc[0:10].plot.bar(x='Stop Word')
 
     ax = df3.plot.hist()
     ax = df4.plot.hist(ax=ax)
