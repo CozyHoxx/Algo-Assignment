@@ -50,8 +50,8 @@ def response():
         lat, lon = 6.32649, 99.8432
         dest_name = "Taiping Lake Garden, Perak"
     print(lat, lon)
-    # map_creator.generate_route([3.167026, 101.558437], [lat, lon])
-    route_list = map_creator.generate_route()
+    # map_creator.generate_route()
+    route_list = map_creator.generate_route((3.167026, 101.558437), (lat, lon))
     print(route_list)
     # Ideally, if can la, return a list of routes for me to display thru here.
     route_1 = {'route_1': route_list[0]}
@@ -82,6 +82,31 @@ def show_map():
 @app.route('/full_map.html')
 def show_the_real_map():
     return send_file('templates\\full_map.html')
+
+
+@app.route('/route1.html')
+def show_route_1():
+    return send_file('templates\\routes\\route1.html')
+
+
+@app.route('/route2.html')
+def show_route_2():
+    return send_file('templates\\routes\\route2.html')
+
+
+@app.route('/route3.html')
+def show_route_3():
+    return send_file('templates\\routes\\route3.html')
+
+
+@app.route('/route4.html')
+def show_route_4():
+    return send_file('templates\\routes\\route4.html')
+
+
+@app.route('/route5.html')
+def show_route_5():
+    return send_file('templates\\routes\\route5.html')
 
 
 # Runs the web server

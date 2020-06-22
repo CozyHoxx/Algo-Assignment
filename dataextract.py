@@ -111,7 +111,7 @@ def generate_walking_route(lat, lon, curr: G.nodes):
     # Just wanna see the destination markers.
     if (curr['stop_name'] == 'Start point' or curr['stop_name'] == 'End Point') and G[
         (lat, lon)].__len__() <= 0:
-        print("not connected")
+        print(curr['stop_name'] + "not connected")
 
 
 def get_graph():
@@ -120,14 +120,10 @@ def get_graph():
 
 def generate_path(start_pos, end_pos):
     print("Connecting start and end......")
-    isStartStation = False
-    isEndStation = False
-    if not G.has_node(start_pos):
-        G.add_node(start_pos, stop_name='Start point', route_name='none')
-        isStartStation = True
-    if not G.has_node(end_pos):
-        G.add_node(end_pos, stop_name='End point', route_name='none')
-        isEndStation = True
+
+    G.add_node(start_pos, stop_name='Start point', route_name='none')
+
+    G.add_node(end_pos, stop_name='End point', route_name='none')
 
     # Connect node to nearby neighbours
 
@@ -171,7 +167,9 @@ def generate_path(start_pos, end_pos):
                 str_transport = "train"
             elif transport_type == Transport.AIRPLANE:
                 str_transport = "airplane"
-            route_string.append(stop1 + " to " + stop2 + " by " + str(str_transport)+ ".")
+            elif transport_type == Transport.TAXI:
+                str_transport = "taxi"
+            route_string.append(stop1 + " to " + stop2 + " by " + str(str_transport) + ".")
         route_list.append(route_string)
 
     return list_subgraph, route_list
@@ -182,7 +180,7 @@ G = nx.compose(G, H)  # Combine G and H
 generate_train_route(G)
 # Boiler plate code to see other coordinates
 list_of_coord = ((5.41123, 100.33543), (4.50327, 101.3981), (4.849050, 100.739113), (6.4414, 100.19862),
-        (6.32649, 99.8432))
+                 (6.32649, 99.8432))
 for coord in list_of_coord:
     G.add_node(coord, stop_name='Start point', route_name='none')
     generate_walking_route(coord[0], coord[1], G.nodes[coord])
