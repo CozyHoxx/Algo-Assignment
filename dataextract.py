@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 # G is weighted directed graph
 G = nx.DiGraph()
 H = nx.DiGraph()
-
+I = nx.DiGraph()
 
 # this comment is to test github
 
@@ -30,7 +30,21 @@ class Transport(Enum):
 def generate_bus_route(graph: nx.Graph):
     data = pandas.read_excel('Dataset\\Bus.xlsx')
     df = pandas.DataFrame(data, columns=['Stop Name', 'Latitud', 'Longitud', 'ROUTE ID', 'Route Name', ])
-    get_route_from_file(df, Transport.BUS)
+    #get_route_from_file(df, Transport.BUS)
+    for i in df.index:
+        lat = df['Latitud'][i]
+        lon = df['Longitud'][i]
+        I.add_node((lat, lon), stop_name=df['Stop Name'][i], route_name=df['Route Name'][i])
+
+    for node in I.nodes(data=True):
+        for other_node in I.nodes(data=True):
+            if node != other_node:
+                I.add_edge(node[0], other_node[0], route_name='Bus', type=Transport.BUS,
+                           weight=distance.distance(node[0], other_node[0]).kilometers)
+
+
+
+
 
 
 def generate_train_route(graph: nx.Graph):
@@ -118,7 +132,6 @@ def generate_path(start_pos, end_pos):
     G.add_node(end_pos, stop_name='End point', route_name='none')
 
     # Connect node to nearby neighbours
-
     generate_walking_route(start_pos[0], start_pos[1], G.nodes[start_pos])
     generate_walking_route(end_pos[0], end_pos[1], G.nodes[end_pos])
 
@@ -164,3 +177,15 @@ generate_airplane_route(G)
 G = nx.compose(G, H)  # Combine G and H
 generate_train_route(G)
 generate_bus_route(G)
+G = nx.compose(G, I)  # Combine G and I
+
+# Function below is to connect all the bus to all other nodes
+for node in I.nodes(data=True):
+    lat = node[0][0]
+    lon = node[0][1]
+    generate_walking_route(lat, lon, G.nodes[(lat, lon)])
+
+
+
+
+
