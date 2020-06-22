@@ -160,30 +160,45 @@ article.mani()
 print(article.pos_neg_score())
 print(len(article.wordfreq) + len(article.stopfreq))
 
+
+
+#put total words into a dataframe and display 
+
 tw = []
 hz = []
 for key, value in article.wordfreq.items():
     tw.append(key)
     hz.append(value)
-Word_dict = {'Total Word':pd.Series(tw), 'Frequency':pd.Series(hz)}
+Word_dict = {'Total Word':pd.Series(tw), 'Total Frequency':pd.Series(hz)}
 df3 = pd.DataFrame(Word_dict)
 
-df3 = df3.sort_values('Frequency',ascending=False)
+df3 = df3.sort_values('Total Frequency',ascending=False)
 print(df3.head(n=10),"\n")
 df3.iloc[0:11].plot.bar(x='Total Word')
 
+#put stop words into a dataframe and display 
 
 tw1 = []
 hz1 = []
 for key, value in article.stopfreq.items():
     tw1.append(key)
     hz1.append(value)
-Stop_dict = {'Stop Word':pd.Series(tw1), 'Frequency':pd.Series(hz1)}
+Stop_dict = {'Stop Word':pd.Series(tw1), 'Stop Frequency':pd.Series(hz1)}
 df4 = pd.DataFrame(Stop_dict)
 
-df4 = df4.sort_values('Frequency',ascending=False)
+df4 = df4.sort_values('Stop Frequency',ascending=False)
 print(df4.head(n=10),"\n")
 df4.iloc[0:11].plot.bar(x='Stop Word')
+
+ax = df3.plot.hist()
+ax = df4.plot.hist(ax=ax)
+ax.set_title('Meta Frequency of Total & Stop Words Histogram')
+ax.set_xlabel('Word frequency')
+ax.set_ylabel('Frequency of Frequency')
+fig = ax.get_figure()
+fig.savefig('Total&StopHist.png')
+
+
 
 #initialise lists
 wrd = []
@@ -198,6 +213,9 @@ Good_dict = {'Word':pd.Series(wrd), 'Good Frequency':pd.Series(freq)}
 df = pd.DataFrame(Good_dict)
 #print(df,"\n")
 ax = df.plot.bar(x = 'Word')
+ax.set_title('Frequency of Positive Words')
+ax.set_xlabel('Positive Words')
+ax.set_ylabel('Frequency')
 fig = ax.get_figure()
 fig.savefig('PosBar.png')
 
@@ -215,6 +233,9 @@ Bad_dict = {'Word':pd.Series(wrd1), 'Bad Frequency':pd.Series(freq1)}
 df2 = pd.DataFrame(Bad_dict)
 #print(df2)
 ax = df2.plot.bar(x = 'Word')
+ax.set_title('Frequency of negative words')
+ax.set_xlabel('Negative Words')
+ax.set_ylabel('Frequency of Words')
 fig = ax.get_figure()
 fig.savefig('NegBar.png')
 
@@ -222,6 +243,9 @@ fig.savefig('NegBar.png')
 #Generate Histogram for Positive & Negative words
 ax = df.plot.hist()
 ax = df2.plot.hist(ax=ax)
+ax.set_title('Meta Frequency of Positive and Negative Words Histogram')
+ax.set_xlabel('Word frequency')
+ax.set_ylabel('Frequency of Frequency')
 fig = ax.get_figure()
 fig.savefig('PosNegHist.png')
 
