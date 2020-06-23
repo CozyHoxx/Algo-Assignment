@@ -1,5 +1,7 @@
-from flask import Flask, render_template, send_file, request, redirect
 from enum import Enum
+
+from flask import Flask, render_template, send_file, request
+
 import map_creator
 
 # This is basically a miniature web server.
@@ -50,7 +52,6 @@ def response():
         lat, lon = 4.849050, 100.739113
         dest_name = "Taiping Lake Garden, Perak"
     print(lat, lon)
-    # map_creator.generate_route()
     route_list = map_creator.generate_route((3.167026, 101.558437), (lat, lon))
 
     # Ideally, if can la, return a list of routes for me to display thru here.

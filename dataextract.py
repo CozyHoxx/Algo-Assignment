@@ -4,11 +4,6 @@ from geopy import distance
 from enum import Enum
 from itertools import islice
 import Word_Pos_Neg_test
-import matplotlib.pyplot as plt
-
-# Prototype data parser
-# Parse data from an excel file and create a list of route
-# for now its just a bus route.
 
 # The Graph used is weighted directed graph
 # G is weighted directed graph
@@ -20,10 +15,6 @@ total_sentiment = sentiment[0] + sentiment[1] + sentiment[2]
 bus_sc = sentiment[0]/total_sentiment
 train_sc = sentiment[1]/total_sentiment
 plane_sc = sentiment[2]/total_sentiment
-# bus_sc = 0
-# train_sc = 0
-# plane_sc = 0
-# this comment is to test github
 
 
 class Transport(Enum):
